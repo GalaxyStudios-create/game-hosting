@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Hosting — Игровой хостинг</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- ============ ЧАСТИЦЫ ============ -->
+<div class="particles" id="particles"></div>
+
+<!-- ============ НАВИГАЦИЯ ============ -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="#" class="logo">
+            <span class="logo-icon">🌌</span>
+            <span class="logo-text">GALAXY<span class="logo-highlight">HOSTING</span></span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home" class="nav-link active">Главная</a></li>
+            <li><a href="#features" class="nav-link">Возможности</a></li>
+            <li><a href="#plans" class="nav-link">Тарифы</a></li>
+            <li><a href="#servers" class="nav-link">Серверы</a></li>
+            <li><a href="#faq" class="nav-link">FAQ</a></li>
+            <li><a href="#contact" class="nav-link">Контакты</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="#plans" class="btn btn-outline-nav">Панель управления</a>
+            <button class="mobile-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- ============ HERO СЕКЦИЯ ============ -->
+<section class="hero" id="home">
+    <div class="hero-bg">
+        <div class="stars"></div>
+        <div class="nebula"></div>
+        <div class="planet planet-1"></div>
+        <div class="planet planet-2"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star shooting-star-2"></div>
+    </div>
+    <div class="hero-content">
+        <div class="hero-badge">🚀 Новое поколение хостинга</div>
+        <h1 class="hero-title">
+            Игровые серверы<br>
+            <span class="gradient-text">в галактике GALAXY</span>
+        </h1>
+        <p class="hero-subtitle">
+            Мощный игровой хостинг с моментальной установкой. 
+            Создай свой сервер за 60 секунд и играй с друзьями!
+        </p>
+        <div class="hero-address">
+            <div class="address-box">
+                <span class="address-label">Подключайся:</span>
+                <span class="address-value" id="serverAddress">play.MyServer.Galaxy</span>
+                <button class="copy-btn" onclick="copyAddress()">📋 Копировать</button>
+            </div>
+        </div>
+        <div class="hero-buttons">
+            <a href="#plans" class="btn btn-primary btn-lg">
+                <span>🎮 Создать сервер</span>
+            </a>
+            <a href="#features" class="btn btn-outline btn-lg">
+                <span>Узнать больше ↓</span>
+            </a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <span class="stat-number" data-count="2547">0</span>
+                <span class="stat-label">Активных серверов</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-count="15820">0</span>
+                <span class="stat-label">Игроков онлайн</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-count="99.9">0</span>
+                <span class="stat-label">% Аптайм</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-count="24">0</span>
+                <span class="stat-label">Локации</span>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
+        <span>Скролль вниз</span>
+    </div>
+</section>
+
+<!-- ============ ИГРЫ ============ -->
+<section class="games-bar">
+    <div class="container">
+        <div class="games-scroll">
+            <div class="game-item">
+                <span class="game-icon">⛏️</span>
+                <span>Minecraft</span>
+            </div>
+            <div class="game-item">
+                <span class="game-icon">🔫</span>
+                <span>CS 2</span>
+            </div>
+            <div class="game-item">
+                <span class="game-icon">🏝️</span>
+                <span>Rust</span>
+            </div>
+            <div class="game-item">
+                <span class="game-icon">🧟</span>
+                <span>DayZ</span>
+            </div>
+            <div class="game-item">
+                <span class="game-icon">🏗️</span>
+                <span>Terraria</span>
+            </div>
+            <div class="game-item">
+                <span class="game-icon">🐉</span>
+                <span>ARK</span>
+            </div>
+            <div class="game-item">
+                <span class="game-icon">🌲</span>
+                <span>Valheim</span>
+            </div>
+            <div class="game-item">
+                <span class="game-icon">👾</span>
+                <span>Garry's Mod</span>
+            </div>
+            <div class="game-item">
+                <span class="game-icon">🚀</span>
+                <span>Space Engineers</span>
+            </div>
+            <div class="game-item">
+                <span class="game-icon">⚔️</span>
+                <span>Conan Exiles</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ ВОЗМОЖНОСТИ ============ -->
+<section class="features" id="features">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">✨ Почему мы?</span>
+            <h2 class="section-title">Космические <span class="gradient-text">возможности</span></h2>
+            <p class="section-subtitle">Всё что нужно для идеального игрового сервера</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card" data-aos="fade-up">
+                <div class="feature-icon-wrap">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-glow"></div>
+                </div>
+                <h3>Мгновенная установка</h3>
+                <p>Сервер готов к игре за 60 секунд. Автоматическая настройка и установка модов одним кликом.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon-wrap">
+                    <div class="feature-icon">🛡️</div>
+                    <div class="feature-glow"></div>
+                </div>
+                <h3>DDoS защита</h3>
+                <p>Мощная защита от DDoS-атак до 500 Гбит/с. Ваш сервер всегда онлайн и доступен.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon-wrap">
+                    <div class="feature-icon">🖥️</div>
+                    <div class="feature-glow"></div>
+                </div>
+                <h3>Веб-панель</h3>
+                <p>Удобная панель управления с файловым менеджером, консолью, планировщиком и бэкапами.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon-wrap">
+                    <div class="feature-icon">💾</div>
+                    <div class="feature-glow"></div>
+                </div>
+                <h3>NVMe SSD диски</h3>
+                <p>Сверхбыстрые NVMe SSD диски для моментальной загрузки карт и чанков.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="feature-icon-wrap">
+                    <div class="feature-icon">🌍</div>
+                    <div class="feature-glow"></div>
+                </div>
+                <h3>Локации по миру</h3>
+                <p>Серверы в Москве, Европе, США и Азии. Минимальный пинг для всех игроков.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="feature-icon-wrap">
+                    <div class="feature-icon">🎧</div>
+                    <div class="feature-glow"></div>
+                </div>
+                <h3>Поддержка 24/7</h3>
+                <p>Техническая поддержка работает круглосуточно. Среднее время ответа — 5 минут.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ ТАРИФЫ ============ -->
+<section class="plans" id="plans">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">💰 Тарифы</span>
+            <h2 class="section-title">Выбери свою <span class="gradient-text">орбиту</span></h2>
+            <p class="section-subtitle">Гибкие тарифы для любого проекта</p>
+        </div>
+        <div class="plans-toggle">
+            <span class="toggle-label active" id="monthlyLabel">Помесячно</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="planToggle">
+                <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label" id="yearlyLabel">Годовой <span class="discount-badge">-20%</span></span>
+        </div>
+        <div class="plans-grid">
+            <!-- Стартовый -->
+            <div class="plan-card" data-aos="fade-up">
+                <div class="plan-header">
+                    <div class="plan-emoji">🌙</div>
+                    <h3 class="plan-name">Луна</h3>
+                    <p class="plan-desc">Для начинающих</p>
+                </div>
+                <div class="plan-price">
+                    <span class="price-amount monthly-price">149₽</span>
+                    <span class="price-amount yearly-price" style="display:none">119₽</span>
+                    <span class="price-period">/месяц</span>
+                </div>
+                <ul class="plan-features">
+                    <li><span class="check">✅</span> 2 ГБ RAM</li>
+                    <li><span class="check">✅</span> 10 ГБ SSD</li>
+                    <li><span class="check">✅</span> 10 слотов</li>
+                    <li><span class="check">✅</span> DDoS защита</li>
+                    <li><span class="check">✅</span> Веб-панель</li>
+                    <li class="disabled"><span class="cross">❌</span> Выделенный IP</li>
+                    <li class="disabled"><span class="cross">❌</span> Приоритет поддержки</li>
+                </ul>
+                <a href="#" class="btn btn-plan">Выбрать план</a>
+            </div>
+
+            <!-- Популярный -->
+            <div class="plan-card plan-popular" data-aos="fade-up" data-aos-delay="100">
+                <div class="popular-badge">⭐ Популярный</div>
+                <div class="plan-header">
+                    <div class="plan-emoji">🪐</div>
+                    <h3 class="plan-name">Сатурн</h3>
+                    <p class="plan-desc">Для средних проектов</p>
+                </div>
+                <div class="plan-price">
+                    <span class="price-amount monthly-price">349₽</span>
+                    <span class="price-amount yearly-price" style="display:none">279₽</span>
+                    <span class="price-period">/месяц</span>
+                </div>
+                <ul class="plan-features">
+                    <li><span class="check">✅</span> 6 ГБ RAM</li>
+                    <li><span class="check">✅</span> 30 ГБ NVMe SSD</li>
+                    <li><span class="check">✅</span> 50 слотов</li>
+                    <li><span class="check">✅</span> DDoS защита</li>
+                    <li><span class="check">✅</span> Веб-панель</li>
+                    <li><span class="check">✅</span> Выделенный IP</li>
+                    <li class="disabled"><span class="cross">❌</span> Приоритет поддержки</li>
+                </ul>
+                <a href="#" class="btn btn-plan btn-plan-popular">Выбрать план</a>
+            </div>
+
+            <!-- Про -->
+            <div class="plan-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="plan-header">
+                    <div class="plan-emoji">☀️</div>
+                    <h3 class="plan-name">Солнце</h3>
+                    <p class="plan-desc">Для крупных проектов</p>
+                </div>
+                <div class="plan-price">
+                    <span class="price-amount monthly-price">699₽</span>
+                    <span class="price-amount yearly-price" style="display:none">559₽</span>
+                    <span class="price-period">/месяц</span>
+                </div>
+                <ul class="plan-features">
+                    <li><span class="check">✅</span> 16 ГБ RAM</li>
+                    <li><span class="check">✅</span> 100 ГБ NVMe SSD</li>
+                    <li><span class="check">✅</span> Безлимит слотов</li>
+                    <li><span class="check">✅</span> DDoS защита PRO</li>
+                    <li><span class="check">✅</span> Веб-панель</li>
+                    <li><span class="check">✅</span> Выделенный IP</li>
+                    <li><span class="check">✅</span> Приоритет поддержки</li>
+                </ul>
+                <a href="#" class="btn btn-plan">Выбрать план</a>
+            </div>
+
+            <!-- Ультра -->
+            <div class="plan-card plan-ultimate" data-aos="fade-up" data-aos-delay="300">
+                <div class="ultimate-badge">🔥 Максимум</div>
+                <div class="plan-header">
+                    <div class="plan-emoji">🌌</div>
+                    <h3 class="plan-name">Галактика</h3>
+                    <p class="plan-desc">Без ограничений</p>
+                </div>
+                <div class="plan-price">
+                    <span class="price-amount monthly-price">1499₽</span>
+                    <span class="price-amount yearly-price" style="display:none">1199₽</span>
+                    <span class="price-period">/месяц</span>
+                </div>
+                <ul class="plan-features">
+                    <li><span class="check">✅</span> 32 ГБ RAM</li>
+                    <li><span class="check">✅</span> 250 ГБ NVMe SSD</li>
+                    <li><span class="check">✅</span> Безлимит слотов</li>
+                    <li><span class="check">✅</span> DDoS защита Ultra</li>
+                    <li><span class="check">✅</span> Своя панель</li>
+                    <li><span class="check">✅</span> Dedicated IP</li>
+                    <li><span class="check">✅</span> VIP Поддержка</li>
+                </ul>
+                <a href="#" class="btn btn-plan btn-plan-ultimate">Выбрать план</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ СОЗДАНИЕ СЕРВЕРА ============ -->
+<section class="server-creator" id="servers">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">🎮 Конфигуратор</span>
+            <h2 class="section-title">Создай свой <span class="gradient-text">сервер</span></h2>
+            <p class="section-subtitle">Настрой сервер под свои нужды</p>
+        </div>
+        <div class="creator-box">
+            <div class="creator-left">
+                <div class="creator-field">
+                    <label>🏷️ Название сервера</label>
+                    <input type="text" id="serverName" placeholder="Мой крутой сервер" class="creator-input">
+                </div>
+                <div class="creator-field">
+                    <label>🎮 Игра</label>
+                    <select id="gameSelect" class="creator-input">
+                        <option value="minecraft">⛏️ Minecraft Java</option>
+                        <option value="minecraft-be">⛏️ Minecraft Bedrock</option>
+                        <option value="cs2">🔫 Counter-Strike 2</option>
+                        <option value="rust">🏝️ Rust</option>
+                        <option value="dayz">🧟 DayZ</option>
+                        <option value="terraria">🏗️ Terraria</option>
+                        <option value="valheim">🌲 Valheim</option>
+                        <option value="ark">🐉 ARK</option>
+                    </select>
+                </div>
+                <div class="creator-field">
+                    <label>🌍 Локация</label>
+                    <div class="location-grid">
+                        <label class="location-option active">
+                            <input type="radio" name="location" value="moscow" checked>
+                            <span class="location-flag">🇷🇺</span>
+                            <span>Москва</span>
+                            <span class="ping">2ms</span>
+                        </label>
+                        <label class="location-option">
+                            <input type="radio" name="location" value="frankfurt">
+                            <span class="location-flag">🇩🇪</span>
+                            <span>Франкфурт</span>
+                            <span class="ping">28ms</span>
+                        </label>
+                        <label class="location-option">
+                            <input type="radio" name="location" value="helsinki">
+                            <span class="location-flag">🇫🇮</span>
+                            <span>Хельсинки</span>
+                            <span class="ping">15ms</span>
+                        </label>
+                        <label class="location-option">
+                            <input type="radio" name="location" value="newyork">
+                            <span class="location-flag">🇺🇸</span>
+                            <span>Нью-Йорк</span>
+                            <span class="ping">95ms</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="creator-field">
+                    <label>💾 Оперативная память: <span id="ramValue">4</span> ГБ</label>
+                    <input type="range" id="ramSlider" min="1" max="64" value="4" class="creator-slider">
+                    <div class="slider-labels">
+                        <span>1 ГБ</span>
+                        <span>64 ГБ</span>
+                    </div>
+                </div>
+                <div class="creator-field">
+                    <label>👥 Слоты: <span id="slotsValue">20</span></label>
+                    <input type="range" id="slotsSlider" min="5" max="500" value="20" class="creator-slider">
+                    <div class="slider-labels">
+                        <span>5</span>
+                        <span>500</span>
+                    </div>
+                </div>
+            </div>
+            <div class="creator-right">
+                <div class="server-preview">
+                    <div class="preview-header">
+                        <div class="preview-dot green"></div>
+                        <span>Предпросмотр сервера</span>
+                    </div>
+                    <div class="preview-body">
+                        <div class="preview-icon">🌌</div>
+                        <h3 id="previewName">Мой крутой сервер</h3>
+                        <div class="preview-address">
+                            <span>play.</span><span id="previewServerName">MyServer</span><span>.Galaxy</span>
+                        </div>
+                        <div class="preview-stats">
+                            <div class="preview-stat">
+                                <span class="preview-stat-value" id="previewRam">4 ГБ</span>
+                                <span class="preview-stat-label">RAM</span>
+                            </div>
+                            <div class="preview-stat">
+                                <span class="preview-stat-value" id="previewSlots">0/20</span>
+                                <span class="preview-stat-label">Слоты</span>
+                            </div>
+                            <div class="preview-stat">
+                                <span class="preview-stat-value" id="previewGame">Minecraft</span>
+                                <span class="preview-stat-label">Игра</span>
+                            </div>
+                        </div>
+                        <div class="preview-status">
+                            <div class="status-dot"></div>
+                            <span>Готов к запуску</span>
+                        </div>
+                        <div class="preview-price">
+                            <span class="preview-price-label">Итого:</span>
+                            <span class="preview-price-value" id="previewPrice">199₽/мес</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-lg btn-create" onclick="createServer()">
+                        🚀 Создать сервер
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq" id="faq">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">❓ FAQ</span>
+            <h2 class="section-title">Частые <span class="gradient-text">вопросы</span></h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Как быстро создаётся сервер?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Сервер создаётся автоматически за 30-60 секунд после оплаты. Вы сразу получите доступ к панели управления и сможете начать играть!</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Можно ли установить моды и плагины?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Да! В панели управления есть магазин модов и плагинов с установкой в один клик. Также вы можете загружать свои моды через файловый менеджер или SFTP.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Какая защита от DDoS-атак?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Все серверы защищены от DDoS-атак мощностью до 500 Гбит/с. Используем современные системы фильтрации трафика для непрерывной работы.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Есть ли автоматические бэкапы?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Да, мы делаем автоматические бэкапы каждые 6 часов. Вы также можете создавать ручные бэкапы в любое время через панель управления.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Как подключить свой домен?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Каждый сервер получает адрес вида play.НазваниеСервера.Galaxy. Вы также можете привязать свой домен через SRV-записи DNS.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Можно ли менять тариф?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Конечно! Вы можете повысить или понизить тариф в любое время. Переход происходит мгновенно без потери данных.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ ОТЗЫВЫ ============ -->
+<section class="reviews">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">💬 Отзывы</span>
+            <h2 class="section-title">Что говорят <span class="gradient-text">игроки</span></h2>
+        </div>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                <p class="review-text">"Лучший хостинг! Сервер Minecraft работает без лагов с 50 игроками. Поддержка отвечает моментально."</p>
+                <div class="review-author">
+                    <div class="review-avatar">🧑‍🚀</div>
+                    <div>
+                        <div class="review-name">Alex_Gamer</div>
+                        <div class="review-plan">Тариф «Сатурн»</div>
+                    </div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                <p class="review-text">"Перешли с другого хостинга — небо и земля! Пинг упал с 80 до 5мс, TPS всегда 20. Рекомендую!"</p>
+                <div class="review-author">
+                    <div class="review-avatar">👨‍💻</div>
+                    <div>
+                        <div class="review-name">ProBuilder</div>
+                        <div class="review-plan">Тариф «Солнце»</div>
+                    </div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                <p class="review-text">"Панель управления просто огонь! Установил 50 модов за 10 минут. Всё работает идеально."</p>
+                <div class="review-author">
+                    <div class="review-avatar">👩‍🎮</div>
+                    <div>
+                        <div class="review-name">CraftQueen</div>
+                        <div class="review-plan">Тариф «Галактика»</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ КОНТАКТЫ ============ -->
+<section class="contact" id="contact">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">📬 Контакты</span>
+            <h2 class="section-title">Свяжись с <span class="gradient-text">нами</span></h2>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="contact-card">
+                    <div class="contact-icon">💬</div>
+                    <h3>Discord</h3>
+                    <p>discord.gg/galaxyhosting</p>
+                    <a href="#" class="btn btn-outline">Присоединиться</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📧</div>
+                    <h3>Email</h3>
+                    <p>support@galaxy.hosting</p>
+                    <a href="#" class="btn btn-outline">Написать</a>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📱</div>
+                    <h3>Telegram</h3>
+                    <p>@galaxy_hosting</p>
+                    <a href="#" class="btn btn-outline">Открыть</a>
+                </div>
+            </div>
+            <form class="contact-form" onsubmit="sendForm(event)">
+                <h3>✉️ Напиши нам</h3>
+                <input type="text" placeholder="Твоё имя" class="form-input" required>
+                <input type="email" placeholder="Email" class="form-input" required>
+                <select class="form-input">
+                    <option>Выбери тему</option>
+                    <option>Техническая поддержка</option>
+                    <option>Вопрос по оплате</option>
+                    <option>Сотрудничество</option>
+                    <option>Другое</option>
+                </select>
+                <textarea placeholder="Твоё сообщение..." class="form-input form-textarea" required></textarea>
+                <button type="submit" class="btn btn-primary btn-lg">🚀 Отправить</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <span class="logo-icon">🌌</span>
+                    <span class="logo-text">GALAXY<span class="logo-highlight">HOSTING</span></span>
+                </a>
+                <p>Лучший игровой хостинг во вселенной. Создавай, играй, побеждай!</p>
+                <div class="footer-socials">
+                    <a href="#" class="social-link">💬</a>
+                    <a href="#" class="social-link">📱</a>
+                    <a href="#" class="social-link">🐦</a>
+                    <a href="#" class="social-link">📺</a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Навигация</h4>
+                <a href="#home">Главная</a>
+                <a href="#features">Возможности</a>
+                <a href="#plans">Тарифы</a>
+                <a href="#servers">Серверы</a>
+            </div>
+            <div class="footer-links">
+                <h4>Поддержка</h4>
+                <a href="#">База знаний</a>
+                <a href="#faq">FAQ</a>
+                <a href="#">Статус серверов</a>
+                <a href="#contact">Контакты</a>
+            </div>
+            <div class="footer-links">
+                <h4>Правовая информация</h4>
+                <a href="#">Пользовательское соглашение</a>
+                <a href="#">Политика конфиденциальности</a>
+                <a href="#">Оферта</a>
+                <a href="#">Возврат средств</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 Galaxy Hosting. Все права защищены. Сделано с 💜 для геймеров.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ============ УВЕДОМЛЕНИЕ ============ -->
+<div class="notification" id="notification">
+    <span class="notification-icon">✅</span>
+    <span class="notification-text" id="notificationText">Скопировано!</span>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
