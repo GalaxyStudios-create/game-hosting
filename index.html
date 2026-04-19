@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GalaxyHosting - Бесплатный хостинг Minecraft серверов</title>
+    <title>GalaxyHosting - Бесплатный хостинг Minecraft</title>
     <style>
         * {
             margin: 0;
@@ -11,179 +11,89 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary: #6C63FF;
-            --secondary: #4834DF;
-            --success: #26DE81;
-            --danger: #FC5C65;
-            --warning: #FD9644;
-            --dark: #1a1a2e;
-            --darker: #0f0f1e;
-            --light: #eee;
-            --purple-glow: rgba(108, 99, 255, 0.3);
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--darker);
-            color: var(--light);
-            overflow-x: hidden;
+            font-family: Arial, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Навигация */
         .navbar {
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
+            background: #1a1a2e;
+            padding: 15px 0;
+            border-bottom: 3px solid #6C63FF;
             position: fixed;
             width: 100%;
             top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid var(--primary);
+            z-index: 999;
         }
 
-        .navbar .container {
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .nav-brand .logo {
-            font-size: 1.8rem;
+        .logo {
+            font-size: 24px;
             font-weight: bold;
-            background: linear-gradient(135deg, var(--primary), #b47eff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #6C63FF;
         }
 
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .nav-menu a {
-            color: var(--light);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .nav-menu a:hover {
-            color: var(--primary);
-        }
-
-        /* Кнопки */
-        .btn-login, .btn-register, .btn-primary, .btn-success, .btn-danger, .btn-warning {
-            padding: 0.7rem 1.5rem;
+        .nav-buttons button {
+            margin-left: 10px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 8px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: bold;
         }
 
         .btn-login {
             background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
+            border: 2px solid #6C63FF !important;
+            color: #6C63FF;
+        }
+
+        .btn-register {
+            background: #6C63FF;
+            color: white;
         }
 
         .btn-login:hover {
-            background: var(--primary);
+            background: #6C63FF;
             color: white;
         }
 
-        .btn-register, .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            box-shadow: 0 4px 15px var(--purple-glow);
-        }
-
-        .btn-register:hover, .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px var(--purple-glow);
-        }
-
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-        }
-
-        .btn-warning {
-            background: var(--warning);
-            color: white;
-        }
-
-        /* Главный экран */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            overflow: hidden;
+            text-align: center;
             padding-top: 80px;
         }
 
-        .stars {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(2px 2px at 20% 30%, white, transparent),
-                radial-gradient(2px 2px at 60% 70%, white, transparent),
-                radial-gradient(1px 1px at 50% 50%, white, transparent),
-                radial-gradient(1px 1px at 80% 10%, white, transparent),
-                radial-gradient(2px 2px at 90% 60%, white, transparent),
-                radial-gradient(1px 1px at 33% 80%, white, transparent);
-            background-size: 200% 200%;
-            animation: twinkle 8s infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        .hero-content {
-            text-align: center;
-            z-index: 1;
-        }
-
         .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #6C63FF;
         }
 
         .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
+            font-size: 24px;
+            margin-bottom: 30px;
             color: #ccc;
         }
 
-        .hero-stats {
+        .stats {
             display: flex;
             justify-content: center;
-            gap: 3rem;
-            margin: 3rem 0;
+            gap: 50px;
+            margin: 40px 0;
         }
 
         .stat {
@@ -191,98 +101,107 @@
         }
 
         .stat h3 {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
+            font-size: 48px;
+            color: #6C63FF;
         }
 
-        /* Возможности */
+        .btn-primary {
+            padding: 15px 40px;
+            background: #6C63FF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background: #5a52d5;
+        }
+
         .features {
-            padding: 5rem 0;
-            background: var(--dark);
+            padding: 80px 20px;
+            background: #1a1a2e;
         }
 
         .features h2 {
             text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
+            font-size: 36px;
+            margin-bottom: 50px;
         }
 
         .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            gap: 30px;
         }
 
         .feature-card {
             background: rgba(108, 99, 255, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 2px solid transparent;
-            transition: all 0.3s;
+            padding: 30px;
+            border-radius: 10px;
             text-align: center;
+            border: 2px solid transparent;
+            transition: 0.3s;
         }
 
         .feature-card:hover {
-            border-color: var(--primary);
+            border-color: #6C63FF;
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px var(--purple-glow);
         }
 
         .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 48px;
+            margin-bottom: 15px;
         }
 
-        .feature-card h3 {
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
-
-        /* Панель управления */
         .dashboard {
             display: none;
-            min-height: 100vh;
-            padding-top: 80px;
+            padding-top: 70px;
+        }
+
+        .dashboard.active {
+            display: flex;
         }
 
         .sidebar {
             width: 250px;
-            background: var(--dark);
-            border-right: 2px solid var(--primary);
+            background: #1a1a2e;
+            height: calc(100vh - 70px);
             position: fixed;
-            height: 100vh;
-            top: 0;
             left: 0;
-            padding-top: 80px;
+            top: 70px;
+            border-right: 2px solid #6C63FF;
             overflow-y: auto;
         }
 
-        .sidebar-header {
-            padding: 1.5rem;
-            border-bottom: 2px solid var(--primary);
+        .sidebar h2 {
+            padding: 20px;
+            border-bottom: 2px solid #6C63FF;
         }
 
-        .sidebar-menu {
+        .sidebar ul {
             list-style: none;
         }
 
-        .sidebar-menu li {
-            padding: 1rem 1.5rem;
+        .sidebar li {
+            padding: 15px 20px;
             cursor: pointer;
-            transition: all 0.3s;
             border-left: 4px solid transparent;
+            transition: 0.3s;
         }
 
-        .sidebar-menu li:hover {
+        .sidebar li:hover {
             background: rgba(108, 99, 255, 0.2);
-            border-left-color: var(--primary);
+            border-left-color: #6C63FF;
         }
 
         .main-content {
             margin-left: 250px;
-            padding: 2rem;
-            width: calc(100% - 250px);
+            padding: 30px;
         }
 
         .tab-content {
@@ -293,152 +212,172 @@
             display: block;
         }
 
-        /* Сервер */
         .server-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
+            margin-bottom: 30px;
         }
 
-        .server-status {
+        .status {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 10px;
         }
 
-        .status-indicator {
-            width: 15px;
-            height: 15px;
+        .status-dot {
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
+            background: #FC5C65;
         }
 
-        .status-indicator.online {
-            background: var(--success);
-            animation: pulse 2s infinite;
+        .status-dot.online {
+            background: #26DE81;
+            animation: blink 2s infinite;
         }
 
-        .status-indicator.offline {
-            background: var(--danger);
-        }
-
-        @keyframes pulse {
+        @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
 
-        .server-controls {
+        .controls {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
         }
 
-        .server-info-grid {
+        .btn-success {
+            padding: 12px 25px;
+            background: #26DE81;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-danger {
+            padding: 12px 25px;
+            background: #FC5C65;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-warning {
+            padding: 12px 25px;
+            background: #FD9644;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .info-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
+            gap: 20px;
         }
 
         .info-card {
-            background: var(--dark);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 2px solid rgba(108, 99, 255, 0.3);
+            background: #1a1a2e;
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid #6C63FF;
         }
 
         .info-card h3 {
-            margin-bottom: 1.5rem;
-            color: var(--primary);
+            color: #6C63FF;
+            margin-bottom: 20px;
         }
 
         .info-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            gap: 1rem;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .info-value {
+            color: #6C63FF;
             font-weight: bold;
-            color: var(--primary);
-            word-break: break-all;
         }
 
-        .info-item button {
-            background: var(--primary);
-            border: none;
-            padding: 0.3rem 0.7rem;
-            border-radius: 5px;
-            cursor: pointer;
+        .copy-btn {
+            padding: 5px 10px;
+            background: #6C63FF;
             color: white;
-            flex-shrink: 0;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 10px;
         }
 
         .progress-bar {
             width: 100%;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.1);
+            height: 8px;
+            background: rgba(255,255,255,0.1);
             border-radius: 10px;
-            margin-top: 1rem;
             overflow: hidden;
+            margin-top: 10px;
         }
 
         .progress {
             height: 100%;
-            background: linear-gradient(90deg, var(--success), var(--primary));
-            transition: width 0.3s;
+            background: linear-gradient(90deg, #26DE81, #6C63FF);
+            width: 0%;
+            transition: width 0.5s;
         }
 
         .action-btn {
             width: 100%;
-            padding: 1rem;
-            margin: 0.5rem 0;
+            padding: 12px;
+            margin: 8px 0;
             background: rgba(108, 99, 255, 0.2);
-            border: 2px solid var(--primary);
+            border: 2px solid #6C63FF;
             color: white;
-            border-radius: 8px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1rem;
+            font-size: 14px;
         }
 
         .action-btn:hover {
-            background: var(--primary);
+            background: #6C63FF;
         }
 
-        /* Консоль */
         .console-container {
             background: #000;
-            border-radius: 10px;
+            border: 2px solid #6C63FF;
+            border-radius: 8px;
             overflow: hidden;
-            border: 2px solid var(--primary);
         }
 
         .console-output {
             height: 500px;
-            padding: 1rem;
+            padding: 15px;
             overflow-y: auto;
             font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
+            font-size: 13px;
         }
 
         .console-line {
-            padding: 0.2rem 0;
             color: #0f0;
+            padding: 3px 0;
         }
 
         .console-input {
             display: flex;
-            border-top: 2px solid var(--primary);
+            border-top: 2px solid #6C63FF;
         }
 
         .console-input input {
             flex: 1;
-            padding: 1rem;
+            padding: 12px;
             background: #111;
             border: none;
             color: #0f0;
@@ -447,126 +386,104 @@
         }
 
         .console-input button {
-            padding: 1rem 2rem;
-            background: var(--primary);
+            padding: 12px 25px;
+            background: #6C63FF;
             border: none;
             color: white;
             cursor: pointer;
-            transition: background 0.3s;
+            font-weight: bold;
         }
 
-        .console-input button:hover {
-            background: var(--secondary);
-        }
-
-        /* Файловый менеджер */
         .file-manager {
-            background: var(--dark);
-            border-radius: 10px;
-            padding: 1.5rem;
-            border: 2px solid rgba(108, 99, 255, 0.3);
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #6C63FF;
         }
 
         .file-toolbar {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
         .file-toolbar button {
-            padding: 0.7rem 1.2rem;
-            background: var(--primary);
+            padding: 10px 20px;
+            background: #6C63FF;
             border: none;
-            border-radius: 5px;
             color: white;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .file-toolbar button:hover {
-            background: var(--secondary);
         }
 
         .file-list {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 8px;
         }
 
         .file-item {
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: 0.3s;
         }
 
         .file-item:hover {
             background: rgba(108, 99, 255, 0.2);
         }
 
-        /* Настройки */
         .settings-container {
-            background: var(--dark);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 2px solid rgba(108, 99, 255, 0.3);
-        }
-
-        .setting-group {
-            margin-bottom: 2rem;
-        }
-
-        .setting-group h3 {
-            margin-bottom: 1.5rem;
-            color: var(--primary);
+            background: #1a1a2e;
+            padding: 30px;
+            border-radius: 8px;
+            border: 2px solid #6C63FF;
         }
 
         .setting-item {
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
         }
 
         .setting-item label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
             color: #ccc;
         }
 
-        .setting-item input, .setting-item select {
+        .setting-item input,
+        .setting-item select {
             width: 100%;
-            padding: 0.7rem;
-            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
             border: 2px solid rgba(108, 99, 255, 0.3);
-            border-radius: 8px;
+            border-radius: 5px;
             color: white;
-            font-size: 1rem;
-            outline: none;
+            font-size: 14px;
         }
 
-        .setting-item input:focus, .setting-item select:focus {
-            border-color: var(--primary);
-        }
-
-        /* Модальные окна */
         .modal {
             display: none;
             position: fixed;
-            z-index: 2000;
+            z-index: 1000;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.8);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .modal-content {
-            background: var(--dark);
-            margin: 10% auto;
-            padding: 2rem;
-            border: 2px solid var(--primary);
-            border-radius: 15px;
+            background: #1a1a2e;
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #6C63FF;
             width: 90%;
             max-width: 400px;
             position: relative;
@@ -574,547 +491,380 @@
 
         .close {
             position: absolute;
-            right: 1rem;
-            top: 1rem;
-            font-size: 2rem;
+            right: 15px;
+            top: 10px;
+            font-size: 28px;
             cursor: pointer;
-            color: var(--light);
-            transition: color 0.3s;
-        }
-
-        .close:hover {
-            color: var(--danger);
+            color: #FC5C65;
         }
 
         .modal-content h2 {
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-        }
-
-        .modal-content form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            color: #6C63FF;
+            margin-bottom: 20px;
         }
 
         .modal-content input {
-            padding: 0.8rem;
-            background: rgba(255, 255, 255, 0.1);
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: rgba(255,255,255,0.1);
             border: 2px solid rgba(108, 99, 255, 0.3);
-            border-radius: 8px;
+            border-radius: 5px;
             color: white;
-            font-size: 1rem;
-            outline: none;
         }
 
-        .modal-content input:focus {
-            border-color: var(--primary);
+        .modal-content button {
+            width: 100%;
+            padding: 12px;
+            background: #6C63FF;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
         }
 
         .modal-content a {
-            color: var(--primary);
+            color: #6C63FF;
             text-decoration: none;
         }
 
-        .modal-content a:hover {
-            text-decoration: underline;
+        .players-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .player-box {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #6C63FF;
         }
 
         .empty-state {
             text-align: center;
-            padding: 3rem;
+            padding: 40px;
             color: #888;
         }
 
-        .players-container {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-        }
-
-        .players-online, .player-actions {
-            background: var(--dark);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 2px solid rgba(108, 99, 255, 0.3);
-        }
-
-        .player-list {
-            margin-top: 1rem;
-        }
-
-        .plugins-container, .backup-container {
-            background: var(--dark);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 2px solid rgba(108, 99, 255, 0.3);
-        }
-
-        .plugin-toolbar {
-            margin-bottom: 2rem;
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .plugin-toolbar button {
-            padding: 0.7rem 1.2rem;
-            background: var(--primary);
-            border: none;
-            border-radius: 5px;
-            color: white;
-            cursor: pointer;
-        }
-
-        .backup-list {
-            margin-top: 2rem;
-        }
-
-        /* Адаптивность */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .hero-stats {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-            
             .sidebar {
                 width: 200px;
             }
-            
             .main-content {
                 margin-left: 200px;
-                width: calc(100% - 200px);
             }
-            
-            .server-info-grid {
+            .players-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .players-container {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-menu {
-                gap: 0.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .dashboard {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-                position: relative;
-                height: auto;
-                padding-top: 0;
-            }
-
-            .main-content {
-                margin-left: 0;
-                width: 100%;
             }
         }
     </style>
 </head>
 <body>
     <!-- Навигация -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <span class="logo">🌌 GalaxyHosting</span>
+    <div class="navbar">
+        <div class="nav-container">
+            <div class="logo">🌌 GalaxyHosting</div>
+            <div class="nav-buttons">
+                <button class="btn-login" onclick="openLogin()">Войти</button>
+                <button class="btn-register" onclick="openRegister()">Регистрация</button>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#home">Главная</a></li>
-                <li><a href="#features">Функции</a></li>
-                <li><button class="btn-login" onclick="showLogin()">Войти</button></li>
-                <li><button class="btn-register" onclick="showRegister()">Регистрация</button></li>
-            </ul>
         </div>
-    </nav>
+    </div>
 
     <!-- Главный экран -->
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Бесплатный хостинг Minecraft серверов</h1>
-                <p>Создай свой сервер за 30 секунд. Полностью бесплатно!</p>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <h3>6 ГБ</h3>
-                        <p>RAM памяти</p>
-                    </div>
-                    <div class="stat">
-                        <h3>∞</h3>
-                        <p>Слотов</p>
-                    </div>
-                    <div class="stat">
-                        <h3>24/7</h3>
-                        <p>Онлайн</p>
-                    </div>
+    <div id="home" class="hero">
+        <div>
+            <h1>Бесплатный хостинг Minecraft</h1>
+            <p>Создай свой сервер за 30 секунд!</p>
+            <div class="stats">
+                <div class="stat">
+                    <h3>6 ГБ</h3>
+                    <p>RAM</p>
                 </div>
-                <button class="btn-primary" onclick="showRegister()">Создать сервер бесплатно</button>
+                <div class="stat">
+                    <h3>∞</h3>
+                    <p>Слотов</p>
+                </div>
+                <div class="stat">
+                    <h3>24/7</h3>
+                    <p>Онлайн</p>
+                </div>
             </div>
+            <button class="btn-primary" onclick="openRegister()">Создать сервер бесплатно</button>
         </div>
-        <div class="stars"></div>
-    </section>
+    </div>
 
     <!-- Возможности -->
-    <section id="features" class="features">
-        <div class="container">
-            <h2>Возможности GalaxyHosting</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🚀</div>
-                    <h3>Мгновенный запуск</h3>
-                    <p>Сервер запускается за 30 секунд</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💾</div>
-                    <h3>6 ГБ RAM</h3>
-                    <p>Достаточно для любых модов</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔧</div>
-                    <h3>Полный контроль</h3>
-                    <p>FTP, консоль, файловый менеджер</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🌍</div>
-                    <h3>Все версии</h3>
-                    <p>От 1.0 до последней версии</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎮</div>
-                    <h3>Моды и плагины</h3>
-                    <p>Forge, Fabric, Spigot, Paper</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3>DDoS защита</h3>
-                    <p>Безопасность вашего сервера</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Статистика</h3>
-                    <p>Мониторинг в реальном времени</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔄</div>
-                    <h3>Автобэкапы</h3>
-                    <p>Сохранность ваших миров</p>
-                </div>
+    <div id="features" class="features">
+        <h2>Возможности GalaxyHosting</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Мгновенный запуск</h3>
+                <p>Сервер запускается за 30 секунд</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💾</div>
+                <h3>6 ГБ RAM</h3>
+                <p>Достаточно для любых модов</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔧</div>
+                <h3>Полный контроль</h3>
+                <p>Консоль, файлы, настройки</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>Все версии</h3>
+                <p>От 1.5.2 до 1.20.4</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎮</div>
+                <h3>Моды и плагины</h3>
+                <p>Forge, Fabric, Spigot, Paper</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>DDoS защита</h3>
+                <p>Безопасность сервера</p>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Панель управления -->
     <div id="dashboard" class="dashboard">
         <div class="sidebar">
-            <div class="sidebar-header">
-                <h2>🌌 Galaxy</h2>
-            </div>
-            <ul class="sidebar-menu">
-                <li onclick="showTab('server')">🖥️ Сервер</li>
-                <li onclick="showTab('console')">📝 Консоль</li>
-                <li onclick="showTab('files')">📁 Файлы</li>
-                <li onclick="showTab('players')">👥 Игроки</li>
-                <li onclick="showTab('plugins')">🔌 Плагины</li>
-                <li onclick="showTab('settings')">⚙️ Настройки</li>
-                <li onclick="showTab('backup')">💾 Бэкапы</li>
-                <li onclick="logout()">🚪 Выход</li>
+            <h2>🌌 Galaxy</h2>
+            <ul>
+                <li onclick="switchTab('server')">🖥️ Сервер</li>
+                <li onclick="switchTab('console')">📝 Консоль</li>
+                <li onclick="switchTab('files')">📁 Файлы</li>
+                <li onclick="switchTab('players')">👥 Игроки</li>
+                <li onclick="switchTab('plugins')">🔌 Плагины</li>
+                <li onclick="switchTab('settings')">⚙️ Настройки</li>
+                <li onclick="switchTab('backup')">💾 Бэкапы</li>
+                <li onclick="doLogout()">🚪 Выход</li>
             </ul>
         </div>
 
         <div class="main-content">
-            <!-- Вкладка сервера -->
+            <!-- Вкладка Сервер -->
             <div id="tab-server" class="tab-content active">
                 <div class="server-header">
                     <h1>Мой Minecraft сервер</h1>
-                    <div class="server-status">
-                        <span class="status-indicator offline"></span>
-                        <span id="server-status-text">Оффлайн</span>
+                    <div class="status">
+                        <div class="status-dot" id="statusDot"></div>
+                        <span id="statusText">Оффлайн</span>
                     </div>
                 </div>
 
-                <div class="server-controls">
+                <div class="controls">
                     <button class="btn-success" onclick="startServer()">▶ Запустить</button>
                     <button class="btn-danger" onclick="stopServer()">⏹ Остановить</button>
                     <button class="btn-warning" onclick="restartServer()">🔄 Перезапуск</button>
                 </div>
 
-                <div class="server-info-grid">
+                <div class="info-grid">
                     <div class="info-card">
                         <h3>Информация о сервере</h3>
                         <div class="info-item">
                             <span>IP адрес:</span>
-                            <span class="info-value" id="server-ip">play.myserver.galaxy</span>
-                            <button onclick="copyIP()">📋</button>
-                        </div>
-                        <div class="info-item">
-                            <span>Порт:</span>
-                            <span class="info-value">25565</span>
+                            <span>
+                                <span class="info-value" id="serverIP">play.myserver.galaxy</span>
+                                <button class="copy-btn" onclick="copyIP()">📋</button>
+                            </span>
                         </div>
                         <div class="info-item">
                             <span>Версия:</span>
-                            <span class="info-value" id="current-version">1.20.4</span>
+                            <span class="info-value" id="versionDisplay">1.20.4</span>
                         </div>
                         <div class="info-item">
                             <span>Игроки:</span>
-                            <span class="info-value" id="players-online">0/100</span>
+                            <span class="info-value" id="playersDisplay">0/100</span>
                         </div>
                         <div class="info-item">
                             <span>RAM:</span>
-                            <span class="info-value" id="ram-usage">0 MB / 6144 MB</span>
+                            <span class="info-value" id="ramDisplay">0 MB / 6144 MB</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress" id="ram-progress" style="width: 0%"></div>
+                            <div class="progress" id="ramProgress"></div>
                         </div>
                         <div class="info-item">
                             <span>CPU:</span>
-                            <span class="info-value" id="cpu-usage">0%</span>
+                            <span class="info-value" id="cpuDisplay">0%</span>
                         </div>
                         <div class="info-item">
                             <span>Uptime:</span>
-                            <span class="info-value" id="uptime">00:00:00</span>
+                            <span class="info-value" id="uptimeDisplay">00:00:00</span>
                         </div>
                     </div>
 
                     <div class="info-card">
                         <h3>Быстрые действия</h3>
-                        <button class="action-btn" onclick="showTab('console')">📝 Открыть консоль</button>
-                        <button class="action-btn" onclick="showTab('files')">📁 Файловый менеджер</button>
-                        <button class="action-btn" onclick="showTab('backup')">💾 Создать бэкап</button>
-                        <button class="action-btn" onclick="showTab('settings')">⚙️ Настройки</button>
-                        <button class="action-btn" onclick="showTab('plugins')">🔌 Установить плагины</button>
+                        <button class="action-btn" onclick="switchTab('console')">📝 Консоль</button>
+                        <button class="action-btn" onclick="switchTab('files')">📁 Файлы</button>
+                        <button class="action-btn" onclick="switchTab('settings')">⚙️ Настройки</button>
+                        <button class="action-btn" onclick="switchTab('backup')">💾 Бэкап</button>
+                        <button class="action-btn" onclick="switchTab('plugins')">🔌 Плагины</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Консоль -->
+            <!-- Вкладка Консоль -->
             <div id="tab-console" class="tab-content">
                 <h2>Консоль сервера</h2>
                 <div class="console-container">
-                    <div class="console-output" id="console-output">
+                    <div class="console-output" id="consoleOutput">
                         <div class="console-line">[GalaxyHosting] Консоль готова</div>
-                        <div class="console-line">[GalaxyHosting] Запустите сервер для просмотра логов</div>
+                        <div class="console-line">[GalaxyHosting] Запустите сервер</div>
                     </div>
                     <div class="console-input">
-                        <input type="text" id="console-command" placeholder="Введите команду..." onkeypress="handleCommand(event)">
+                        <input type="text" id="consoleInput" placeholder="Введите команду...">
                         <button onclick="sendCommand()">Отправить</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Файлы -->
+            <!-- Вкладка Файлы -->
             <div id="tab-files" class="tab-content">
                 <h2>Файловый менеджер</h2>
                 <div class="file-manager">
                     <div class="file-toolbar">
-                        <button onclick="createFile()">➕ Файл</button>
-                        <button onclick="createFolder()">📁 Папка</button>
-                        <button onclick="uploadFile()">⬆️ Загрузить</button>
-                        <button onclick="refreshFiles()">🔄 Обновить</button>
+                        <button onclick="alert('Создание файла')">➕ Файл</button>
+                        <button onclick="alert('Создание папки')">📁 Папка</button>
+                        <button onclick="alert('Загрузка файла')">⬆️ Загрузить</button>
                     </div>
-                    <div class="file-list" id="file-list">
-                        <div class="file-item folder" onclick="openFolder('plugins')">
-                            <span>📁 plugins</span>
-                        </div>
-                        <div class="file-item folder" onclick="openFolder('world')">
-                            <span>📁 world</span>
-                        </div>
-                        <div class="file-item folder" onclick="openFolder('mods')">
-                            <span>📁 mods</span>
-                        </div>
-                        <div class="file-item file" onclick="editFile('server.properties')">
-                            <span>📄 server.properties</span>
-                        </div>
-                        <div class="file-item file" onclick="editFile('ops.json')">
-                            <span>📄 ops.json</span>
-                        </div>
-                        <div class="file-item file" onclick="editFile('whitelist.json')">
-                            <span>📄 whitelist.json</span>
-                        </div>
-                        <div class="file-item file" onclick="editFile('banned-players.json')">
-                            <span>📄 banned-players.json</span>
-                        </div>
+                    <div class="file-list">
+                        <div class="file-item">📁 plugins</div>
+                        <div class="file-item">📁 world</div>
+                        <div class="file-item">📁 mods</div>
+                        <div class="file-item">📄 server.properties</div>
+                        <div class="file-item">📄 ops.json</div>
+                        <div class="file-item">📄 whitelist.json</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Игроки -->
+            <!-- Вкладка Игроки -->
             <div id="tab-players" class="tab-content">
                 <h2>Управление игроками</h2>
-                <div class="players-container">
-                    <div class="players-online">
-                        <h3>Игроки онлайн (<span id="players-count">0</span>)</h3>
-                        <div id="online-players" class="player-list">
-                            <p class="empty-state">Нет игроков онлайн</p>
-                        </div>
+                <div class="players-grid">
+                    <div class="player-box">
+                        <h3>Игроки онлайн (<span id="playerCount">0</span>)</h3>
+                        <div id="playerList" class="empty-state">Нет игроков онлайн</div>
                     </div>
-                    <div class="player-actions">
+                    <div class="player-box">
                         <h3>Действия</h3>
-                        <button class="action-btn" onclick="showWhitelist()">📋 Whitelist</button>
-                        <button class="action-btn" onclick="showBanlist()">🚫 Баны</button>
-                        <button class="action-btn" onclick="showOps()">👑 OP</button>
-                        <button class="action-btn" onclick="kickAll()">⚠️ Кикнуть всех</button>
+                        <button class="action-btn" onclick="alert('Whitelist')">📋 Whitelist</button>
+                        <button class="action-btn" onclick="alert('Банлист')">🚫 Баны</button>
+                        <button class="action-btn" onclick="alert('OP права')">👑 OP</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Плагины -->
+            <!-- Вкладка Плагины -->
             <div id="tab-plugins" class="tab-content">
                 <h2>Плагины и моды</h2>
-                <div class="plugins-container">
-                    <div class="plugin-toolbar">
-                        <button onclick="installPlugin()">⬇️ Установить</button>
-                        <button onclick="uploadPlugin()">⬆️ Загрузить</button>
-                        <button onclick="refreshPlugins()">🔄 Обновить</button>
+                <div class="file-manager">
+                    <div class="file-toolbar">
+                        <button onclick="alert('Магазин плагинов:\n\n- EssentialsX\n- WorldEdit\n- LuckPerms\n- Vault')">⬇️ Установить</button>
+                        <button onclick="alert('Загрузка плагина')">⬆️ Загрузить</button>
                     </div>
-                    <div class="plugin-list" id="plugin-list">
-                        <p class="empty-state">Плагины не установлены</p>
-                    </div>
+                    <div class="empty-state">Плагины не установлены</div>
                 </div>
             </div>
 
-            <!-- Настройки -->
+            <!-- Вкладка Настройки -->
             <div id="tab-settings" class="tab-content">
                 <h2>Настройки сервера</h2>
                 <div class="settings-container">
-                    <div class="setting-group">
-                        <h3>Основные настройки</h3>
-                        <div class="setting-item">
-                            <label>Название сервера:</label>
-                            <input type="text" id="server-name" value="MyServer" placeholder="Введите название" onchange="updateServerName()">
-                        </div>
-                        <div class="setting-item">
-                            <label>Версия Minecraft:</label>
-                            <select id="mc-version">
-                                <optgroup label="Последние версии">
-                                    <option selected>1.20.4</option>
-                                    <option>1.20.3</option>
-                                    <option>1.20.2</option>
-                                    <option>1.20.1</option>
-                                    <option>1.20</option>
-                                </optgroup>
-                                <optgroup label="1.19.x">
-                                    <option>1.19.4</option>
-                                    <option>1.19.3</option>
-                                    <option>1.19.2</option>
-                                    <option>1.19.1</option>
-                                    <option>1.19</option>
-                                </optgroup>
-                                <optgroup label="1.18.x">
-                                    <option>1.18.2</option>
-                                    <option>1.18.1</option>
-                                    <option>1.18</option>
-                                </optgroup>
-                                <optgroup label="1.17.x">
-                                    <option>1.17.1</option>
-                                    <option>1.17</option>
-                                </optgroup>
-                                <optgroup label="1.16.x">
-                                    <option>1.16.5</option>
-                                    <option>1.16.4</option>
-                                    <option>1.16.3</option>
-                                    <option>1.16.2</option>
-                                    <option>1.16.1</option>
-                                </optgroup>
-                                <optgroup label="1.15.x">
-                                    <option>1.15.2</option>
-                                    <option>1.15.1</option>
-                                </optgroup>
-                                <optgroup label="1.14.x">
-                                    <option>1.14.4</option>
-                                    <option>1.14.3</option>
-                                </optgroup>
-                                <optgroup label="1.13.x">
-                                    <option>1.13.2</option>
-                                    <option>1.13.1</option>
-                                </optgroup>
-                                <optgroup label="1.12.x">
-                                    <option>1.12.2</option>
-                                    <option>1.12.1</option>
-                                </optgroup>
-                                <optgroup label="Старые версии">
-                                    <option>1.11.2</option>
-                                    <option>1.10.2</option>
-                                    <option>1.9.4</option>
-                                    <option>1.8.9</option>
-                                    <option>1.7.10</option>
-                                    <option>1.6.4</option>
-                                    <option>1.5.2</option>
-                                </optgroup>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <label>Тип сервера:</label>
-                            <select id="server-type">
-                                <option>Vanilla</option>
-                                <option>Spigot</option>
-                                <option selected>Paper</option>
-                                <option>Purpur</option>
-                                <option>Forge</option>
-                                <option>Fabric</option>
-                                <option>Mohist</option>
-                                <option>Catserver</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <label>Максимум игроков:</label>
-                            <input type="number" id="max-players" value="100" min="1" max="1000">
-                        </div>
-                        <div class="setting-item">
-                            <label>MOTD:</label>
-                            <input type="text" id="motd" value="Welcome to GalaxyHosting!">
-                        </div>
-                        <div class="setting-item">
-                            <label>Режим игры:</label>
-                            <select id="gamemode">
-                                <option selected>Survival</option>
-                                <option>Creative</option>
-                                <option>Adventure</option>
-                                <option>Spectator</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <label>Сложность:</label>
-                            <select id="difficulty">
-                                <option>Peaceful</option>
-                                <option>Easy</option>
-                                <option selected>Normal</option>
-                                <option>Hard</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <label>PVP:</label>
-                            <select id="pvp">
-                                <option selected>Включен</option>
-                                <option>Выключен</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <label>Дистанция прорисовки:</label>
-                            <input type="number" id="view-distance" value="10" min="3" max="32">
-                        </div>
+                    <div class="setting-item">
+                        <label>Название сервера:</label>
+                        <input type="text" id="serverName" value="MyServer">
                     </div>
-                    <button class="btn-primary" onclick="saveSettings()">💾 Сохранить настройки</button>
+                    <div class="setting-item">
+                        <label>Версия Minecraft:</label>
+                        <select id="mcVersion">
+                            <optgroup label="Новые">
+                                <option>1.20.4</option>
+                                <option>1.20.3</option>
+                                <option>1.20.2</option>
+                                <option>1.20.1</option>
+                                <option>1.19.4</option>
+                                <option>1.19.3</option>
+                                <option>1.19.2</option>
+                            </optgroup>
+                            <optgroup label="1.18.x">
+                                <option>1.18.2</option>
+                                <option>1.18.1</option>
+                            </optgroup>
+                            <optgroup label="1.17.x">
+                                <option>1.17.1</option>
+                                <option>1.17</option>
+                            </optgroup>
+                            <optgroup label="1.16.x">
+                                <option>1.16.5</option>
+                                <option>1.16.4</option>
+                                <option>1.16.3</option>
+                            </optgroup>
+                            <optgroup label="Популярные">
+                                <option>1.12.2</option>
+                                <option>1.8.9</option>
+                                <option>1.7.10</option>
+                            </optgroup>
+                            <optgroup label="Старые">
+                                <option>1.6.4</option>
+                                <option>1.5.2</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>Тип сервера:</label>
+                        <select id="serverType">
+                            <option>Vanilla</option>
+                            <option>Spigot</option>
+                            <option>Paper</option>
+                            <option>Purpur</option>
+                            <option>Forge</option>
+                            <option>Fabric</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>Максимум игроков:</label>
+                        <input type="number" id="maxPlayers" value="100" min="1" max="1000">
+                    </div>
+                    <div class="setting-item">
+                        <label>Режим игры:</label>
+                        <select>
+                            <option>Survival</option>
+                            <option>Creative</option>
+                            <option>Adventure</option>
+                            <option>Spectator</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>Сложность:</label>
+                        <select>
+                            <option>Peaceful</option>
+                            <option>Easy</option>
+                            <option>Normal</option>
+                            <option>Hard</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" onclick="saveSettings()">💾 Сохранить</button>
                 </div>
             </div>
 
-            <!-- Бэкапы -->
+            <!-- Вкладка Бэкапы -->
             <div id="tab-backup" class="tab-content">
                 <h2>Бэкапы сервера</h2>
-                <div class="backup-container">
+                <div class="file-manager">
                     <button class="btn-primary" onclick="createBackup()">💾 Создать бэкап</button>
-                    <div class="backup-list" id="backup-list">
-                        <h3>Список бэкапов</h3>
-                        <p class="empty-state">Бэкапы отсутствуют</p>
+                    <div id="backupList" style="margin-top: 20px;">
+                        <div class="empty-state">Бэкапы отсутствуют</div>
                     </div>
                 </div>
             </div>
@@ -1124,30 +874,25 @@
     <!-- Модальное окно входа -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <span class="close" onclick="closeLogin()">&times;</span>
             <h2>Вход в аккаунт</h2>
-            <form onsubmit="login(event)">
-                <input type="text" placeholder="Имя пользователя" required>
-                <input type="password" placeholder="Пароль" required>
-                <button type="submit" class="btn-primary">Войти</button>
-            </form>
-            <p>Нет аккаунта? <a href="#" onclick="closeModal('loginModal'); showRegister()">Зарегистрироваться</a></p>
+            <input type="text" placeholder="Имя пользователя" id="loginUser">
+            <input type="password" placeholder="Пароль" id="loginPass">
+            <button onclick="doLogin()">Войти</button>
+            <p style="margin-top: 15px;">Нет аккаунта? <a href="#" onclick="closeLogin(); openRegister()">Зарегистрироваться</a></p>
         </div>
     </div>
 
     <!-- Модальное окно регистрации -->
     <div id="registerModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('registerModal')">&times;</span>
-            <h2>Создать аккаунт</h2>
-            <form onsubmit="register(event)">
-                <input type="text" placeholder="Имя пользователя" required>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Пароль" required>
-                <input type="password" placeholder="Повторите пароль" required>
-                <button type="submit" class="btn-primary">Зарегистрироваться</button>
-            </form>
-            <p>Уже есть аккаунт? <a href="#" onclick="closeModal('registerModal'); showLogin()">Войти</a></p>
+            <span class="close" onclick="closeRegister()">&times;</span>
+            <h2>Регистрация</h2>
+            <input type="text" placeholder="Имя пользователя" id="regUser">
+            <input type="email" placeholder="Email" id="regEmail">
+            <input type="password" placeholder="Пароль" id="regPass">
+            <button onclick="doRegister()">Создать аккаунт</button>
+            <p style="margin-top: 15px;">Есть аккаунт? <a href="#" onclick="closeRegister(); openLogin()">Войти</a></p>
         </div>
     </div>
 
