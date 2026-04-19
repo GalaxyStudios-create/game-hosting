@@ -4,7 +4,686 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GalaxyHosting - Бесплатный хостинг Minecraft серверов</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4834DF;
+            --success: #26DE81;
+            --danger: #FC5C65;
+            --warning: #FD9644;
+            --dark: #1a1a2e;
+            --darker: #0f0f1e;
+            --light: #eee;
+            --purple-glow: rgba(108, 99, 255, 0.3);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Навигация */
+        .navbar {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), #b47eff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary);
+        }
+
+        /* Кнопки */
+        .btn-login, .btn-register, .btn-primary, .btn-success, .btn-danger, .btn-warning {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-login {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-login:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-register, .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px var(--purple-glow);
+        }
+
+        .btn-register:hover, .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--purple-glow);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        /* Главный экран */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20% 30%, white, transparent),
+                radial-gradient(2px 2px at 60% 70%, white, transparent),
+                radial-gradient(1px 1px at 50% 50%, white, transparent),
+                radial-gradient(1px 1px at 80% 10%, white, transparent),
+                radial-gradient(2px 2px at 90% 60%, white, transparent),
+                radial-gradient(1px 1px at 33% 80%, white, transparent);
+            background-size: 200% 200%;
+            animation: twinkle 8s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #ccc;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat h3 {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Возможности */
+        .features {
+            padding: 5rem 0;
+            background: var(--dark);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(108, 99, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--purple-glow);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        /* Панель управления */
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: var(--dark);
+            border-right: 2px solid var(--primary);
+            position: fixed;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            padding-top: 80px;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar-menu li:hover {
+            background: rgba(108, 99, 255, 0.2);
+            border-left-color: var(--primary);
+        }
+
+        .main-content {
+            margin-left: 250px;
+            flex: 1;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Сервер */
+        .server-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .server-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .status-indicator.online {
+            background: var(--success);
+        }
+
+        .status-indicator.offline {
+            background: var(--danger);
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .server-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .server-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-card {
+            background: var(--dark);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid rgba(108, 99, 255, 0.3);
+        }
+
+        .info-card h3 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 1rem;
+        }
+
+        .info-value {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .info-item button {
+            background: var(--primary);
+            border: none;
+            padding: 0.3rem 0.7rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--primary));
+            transition: width 0.3s;
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: rgba(108, 99, 255, 0.2);
+            border: 2px solid var(--primary);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .action-btn:hover {
+            background: var(--primary);
+        }
+
+        /* Консоль */
+        .console-container {
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid var(--primary);
+        }
+
+        .console-output {
+            height: 500px;
+            padding: 1rem;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .console-line {
+            padding: 0.2rem 0;
+            color: #0f0;
+        }
+
+        .console-input {
+            display: flex;
+            border-top: 2px solid var(--primary);
+        }
+
+        .console-input input {
+            flex: 1;
+            padding: 1rem;
+            background: #111;
+            border: none;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .console-input button {
+            padding: 1rem 2rem;
+            background: var(--primary);
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Файловый менеджер */
+        .file-manager {
+            background: var(--dark);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 2px solid rgba(108, 99, 255, 0.3);
+        }
+
+        .file-toolbar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .file-toolbar button {
+            padding: 0.7rem 1.2rem;
+            background: var(--primary);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .file-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .file-item {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-item:hover {
+            background: rgba(108, 99, 255, 0.2);
+        }
+
+        /* Настройки */
+        .settings-container {
+            background: var(--dark);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid rgba(108, 99, 255, 0.3);
+        }
+
+        .setting-group {
+            margin-bottom: 2rem;
+        }
+
+        .setting-group h3 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .setting-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .setting-item label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ccc;
+        }
+
+        .setting-item input, .setting-item select {
+            width: 100%;
+            padding: 0.7rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(108, 99, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        /* Модальные окна */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--dark);
+            margin: 10% auto;
+            padding: 2rem;
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--light);
+        }
+
+        .modal-content h2 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .modal-content input {
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(108, 99, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .modal-content a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #888;
+        }
+
+        .players-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .players-online, .player-actions {
+            background: var(--dark);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid rgba(108, 99, 255, 0.3);
+        }
+
+        .player-list {
+            margin-top: 1rem;
+        }
+
+        .plugins-container, .backup-container {
+            background: var(--dark);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid rgba(108, 99, 255, 0.3);
+        }
+
+        .plugin-toolbar {
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .plugin-toolbar button {
+            padding: 0.7rem 1.2rem;
+            background: var(--primary);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .backup-list {
+            margin-top: 2rem;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .sidebar {
+                width: 200px;
+            }
+            
+            .main-content {
+                margin-left: 200px;
+            }
+            
+            .server-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .players-container {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-menu {
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+                padding-top: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Навигация -->
@@ -15,8 +694,7 @@
             </div>
             <ul class="nav-menu">
                 <li><a href="#home">Главная</a></li>
-                <li><a href="#features">Возможности</a></li>
-                <li><a href="#pricing">Тарифы</a></li>
+                <li><a href="#features">Функции</a></li>
                 <li><button class="btn-login" onclick="showLogin()">Войти</button></li>
                 <li><button class="btn-register" onclick="showRegister()">Регистрация</button></li>
             </ul>
@@ -27,12 +705,12 @@
     <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>Бесплатный хостинг для Minecraft серверов</h1>
+                <h1>Бесплатный хостинг Minecraft серверов</h1>
                 <p>Создай свой сервер за 30 секунд. Полностью бесплатно!</p>
                 <div class="hero-stats">
                     <div class="stat">
                         <h3>6 ГБ</h3>
-                        <p>Оперативной памяти</p>
+                        <p>RAM памяти</p>
                     </div>
                     <div class="stat">
                         <h3>∞</h3>
@@ -40,7 +718,7 @@
                     </div>
                     <div class="stat">
                         <h3>24/7</h3>
-                        <p>Поддержка</p>
+                        <p>Онлайн</p>
                     </div>
                 </div>
                 <button class="btn-primary" onclick="showRegister()">Создать сервер бесплатно</button>
@@ -98,11 +776,11 @@
         </div>
     </section>
 
-    <!-- Панель управления (скрыта по умолчанию) -->
+    <!-- Панель управления -->
     <div id="dashboard" class="dashboard" style="display: none;">
         <div class="sidebar">
             <div class="sidebar-header">
-                <h2>🌌 GalaxyHosting</h2>
+                <h2>🌌 Galaxy</h2>
             </div>
             <ul class="sidebar-menu">
                 <li onclick="showTab('server')">🖥️ Сервер</li>
@@ -120,7 +798,7 @@
             <!-- Вкладка сервера -->
             <div id="tab-server" class="tab-content active">
                 <div class="server-header">
-                    <h1>Мой сервер Minecraft</h1>
+                    <h1>Мой Minecraft сервер</h1>
                     <div class="server-status">
                         <span class="status-indicator offline"></span>
                         <span id="server-status-text">Оффлайн</span>
@@ -130,7 +808,7 @@
                 <div class="server-controls">
                     <button class="btn-success" onclick="startServer()">▶ Запустить</button>
                     <button class="btn-danger" onclick="stopServer()">⏹ Остановить</button>
-                    <button class="btn-warning" onclick="restartServer()">🔄 Перезапустить</button>
+                    <button class="btn-warning" onclick="restartServer()">🔄 Перезапуск</button>
                 </div>
 
                 <div class="server-info-grid">
@@ -138,15 +816,19 @@
                         <h3>Информация о сервере</h3>
                         <div class="info-item">
                             <span>IP адрес:</span>
-                            <span class="info-value" id="server-ip">galaxy.hosting:25565</span>
+                            <span class="info-value" id="server-ip">play.servername.galaxy</span>
                             <button onclick="copyIP()">📋</button>
+                        </div>
+                        <div class="info-item">
+                            <span>Порт:</span>
+                            <span class="info-value">25565</span>
                         </div>
                         <div class="info-item">
                             <span>Версия:</span>
                             <span class="info-value">1.20.4</span>
                         </div>
                         <div class="info-item">
-                            <span>Игроки онлайн:</span>
+                            <span>Игроки:</span>
                             <span class="info-value" id="players-online">0/100</span>
                         </div>
                         <div class="info-item">
@@ -156,6 +838,14 @@
                         <div class="progress-bar">
                             <div class="progress" id="ram-progress" style="width: 0%"></div>
                         </div>
+                        <div class="info-item">
+                            <span>CPU:</span>
+                            <span class="info-value" id="cpu-usage">0%</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Uptime:</span>
+                            <span class="info-value" id="uptime">00:00:00</span>
+                        </div>
                     </div>
 
                     <div class="info-card">
@@ -163,17 +853,18 @@
                         <button class="action-btn" onclick="showTab('console')">📝 Открыть консоль</button>
                         <button class="action-btn" onclick="showTab('files')">📁 Файловый менеджер</button>
                         <button class="action-btn" onclick="showTab('backup')">💾 Создать бэкап</button>
-                        <button class="action-btn" onclick="showTab('settings')">⚙️ Настройки сервера</button>
+                        <button class="action-btn" onclick="showTab('settings')">⚙️ Настройки</button>
+                        <button class="action-btn" onclick="showTab('plugins')">🔌 Установить плагины</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Вкладка консоли -->
+            <!-- Консоль -->
             <div id="tab-console" class="tab-content">
                 <h2>Консоль сервера</h2>
                 <div class="console-container">
                     <div class="console-output" id="console-output">
-                        <div class="console-line">[GalaxyHosting] Консоль готова к работе</div>
+                        <div class="console-line">[GalaxyHosting] Консоль готова</div>
                         <div class="console-line">[GalaxyHosting] Запустите сервер для просмотра логов</div>
                     </div>
                     <div class="console-input">
@@ -183,21 +874,25 @@
                 </div>
             </div>
 
-            <!-- Вкладка файлов -->
+            <!-- Файлы -->
             <div id="tab-files" class="tab-content">
                 <h2>Файловый менеджер</h2>
                 <div class="file-manager">
                     <div class="file-toolbar">
-                        <button onclick="createFile()">➕ Создать файл</button>
-                        <button onclick="createFolder()">📁 Создать папку</button>
+                        <button onclick="createFile()">➕ Файл</button>
+                        <button onclick="createFolder()">📁 Папка</button>
                         <button onclick="uploadFile()">⬆️ Загрузить</button>
+                        <button onclick="refreshFiles()">🔄 Обновить</button>
                     </div>
-                    <div class="file-list">
+                    <div class="file-list" id="file-list">
                         <div class="file-item folder" onclick="openFolder('plugins')">
                             <span>📁 plugins</span>
                         </div>
                         <div class="file-item folder" onclick="openFolder('world')">
                             <span>📁 world</span>
+                        </div>
+                        <div class="file-item folder" onclick="openFolder('mods')">
+                            <span>📁 mods</span>
                         </div>
                         <div class="file-item file" onclick="editFile('server.properties')">
                             <span>📄 server.properties</span>
@@ -208,11 +903,14 @@
                         <div class="file-item file" onclick="editFile('whitelist.json')">
                             <span>📄 whitelist.json</span>
                         </div>
+                        <div class="file-item file" onclick="editFile('banned-players.json')">
+                            <span>📄 banned-players.json</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Вкладка игроков -->
+            <!-- Игроки -->
             <div id="tab-players" class="tab-content">
                 <h2>Управление игроками</h2>
                 <div class="players-container">
@@ -224,28 +922,30 @@
                     </div>
                     <div class="player-actions">
                         <h3>Действия</h3>
-                        <button class="action-btn" onclick="showWhitelist()">📋 Белый список</button>
-                        <button class="action-btn" onclick="showBanlist()">🚫 Список банов</button>
-                        <button class="action-btn" onclick="showOps()">👑 OP права</button>
+                        <button class="action-btn" onclick="showWhitelist()">📋 Whitelist</button>
+                        <button class="action-btn" onclick="showBanlist()">🚫 Баны</button>
+                        <button class="action-btn" onclick="showOps()">👑 OP</button>
+                        <button class="action-btn" onclick="kickAll()">⚠️ Кикнуть всех</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Вкладка плагинов -->
+            <!-- Плагины -->
             <div id="tab-plugins" class="tab-content">
                 <h2>Плагины и моды</h2>
                 <div class="plugins-container">
                     <div class="plugin-toolbar">
-                        <button onclick="installPlugin()">⬇️ Установить плагин</button>
-                        <button onclick="uploadPlugin()">⬆️ Загрузить плагин</button>
+                        <button onclick="installPlugin()">⬇️ Установить</button>
+                        <button onclick="uploadPlugin()">⬆️ Загрузить</button>
+                        <button onclick="refreshPlugins()">🔄 Обновить</button>
                     </div>
-                    <div class="plugin-list">
-                        <p class="empty-state">Плагины не установлены. Загрузите свои или установите из магазина.</p>
+                    <div class="plugin-list" id="plugin-list">
+                        <p class="empty-state">Плагины не установлены</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Вкладка настроек -->
+            <!-- Настройки -->
             <div id="tab-settings" class="tab-content">
                 <h2>Настройки сервера</h2>
                 <div class="settings-container">
@@ -254,12 +954,13 @@
                         <div class="setting-item">
                             <label>Версия Minecraft:</label>
                             <select id="mc-version">
-                                <option>1.20.4</option>
+                                <option>1.20.4 (Latest)</option>
                                 <option>1.20.2</option>
                                 <option>1.19.4</option>
                                 <option>1.18.2</option>
                                 <option>1.16.5</option>
                                 <option>1.12.2</option>
+                                <option>1.8.9</option>
                             </select>
                         </div>
                         <div class="setting-item">
@@ -270,15 +971,24 @@
                                 <option>Paper</option>
                                 <option>Forge</option>
                                 <option>Fabric</option>
+                                <option>Purpur</option>
                             </select>
                         </div>
                         <div class="setting-item">
                             <label>Максимум игроков:</label>
-                            <input type="number" value="100" min="1" max="1000">
+                            <input type="number" id="max-players" value="100" min="1" max="1000">
+                        </div>
+                        <div class="setting-item">
+                            <label>Название сервера:</label>
+                            <input type="text" id="server-name" value="My Galaxy Server">
+                        </div>
+                        <div class="setting-item">
+                            <label>MOTD:</label>
+                            <input type="text" id="motd" value="Welcome to GalaxyHosting!">
                         </div>
                         <div class="setting-item">
                             <label>Режим игры:</label>
-                            <select>
+                            <select id="gamemode">
                                 <option>Survival</option>
                                 <option>Creative</option>
                                 <option>Adventure</option>
@@ -287,24 +997,35 @@
                         </div>
                         <div class="setting-item">
                             <label>Сложность:</label>
-                            <select>
+                            <select id="difficulty">
                                 <option>Peaceful</option>
                                 <option>Easy</option>
                                 <option>Normal</option>
                                 <option>Hard</option>
                             </select>
                         </div>
+                        <div class="setting-item">
+                            <label>PVP:</label>
+                            <select id="pvp">
+                                <option>Включен</option>
+                                <option>Выключен</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label>Дистанция прорисовки:</label>
+                            <input type="number" id="view-distance" value="10" min="3" max="32">
+                        </div>
                     </div>
                     <button class="btn-primary" onclick="saveSettings()">💾 Сохранить настройки</button>
                 </div>
             </div>
 
-            <!-- Вкладка бэкапов -->
+            <!-- Бэкапы -->
             <div id="tab-backup" class="tab-content">
                 <h2>Бэкапы сервера</h2>
                 <div class="backup-container">
-                    <button class="btn-primary" onclick="createBackup()">💾 Создать бэкап сейчас</button>
-                    <div class="backup-list">
+                    <button class="btn-primary" onclick="createBackup()">💾 Создать бэкап</button>
+                    <div class="backup-list" id="backup-list">
                         <h3>Список бэкапов</h3>
                         <p class="empty-state">Бэкапы отсутствуют</p>
                     </div>
@@ -331,13 +1052,13 @@
     <div id="registerModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('registerModal')">&times;</span>
-            <h2>Регистрация</h2>
+            <h2>Создать аккаунт</h2>
             <form onsubmit="register(event)">
                 <input type="text" placeholder="Имя пользователя" required>
                 <input type="email" placeholder="Email" required>
                 <input type="password" placeholder="Пароль" required>
                 <input type="password" placeholder="Повторите пароль" required>
-                <button type="submit" class="btn-primary">Создать аккаунт</button>
+                <button type="submit" class="btn-primary">Зарегистрироваться</button>
             </form>
             <p>Уже есть аккаунт? <a href="#" onclick="closeModal('registerModal'); showLogin()">Войти</a></p>
         </div>
