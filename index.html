@@ -3,125 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Биткоин Кликер: Brawl Edition</title>
+    <title>Bitcoin Clicker</title>
     <style>
-        /* Анимации */
-        @keyframes float-up { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-80px); opacity: 0; } }
-        @keyframes modal-pop-in { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 15px #ffde00, 0 0 5px #fff; } 50% { box-shadow: 0 0 30px #ffde00, 0 0 10px #fff; } }
-
-        /* Основные стили */
-        :root { --brawl-blue: #0e457f; --brawl-purple: #4c1a82; --brawl-yellow: #fde84e; --brawl-pink: #fe5591; }
-        * { box-sizing: border-box; }
-        body {
-            font-family: 'Arial Black', Gadget, sans-serif;
-            background: linear-gradient(135deg, var(--brawl-blue), var(--brawl-purple));
-            color: #fff;
+        * {
             margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            user-select: none;
-            overflow: hidden;
-            text-transform: uppercase;
+            padding: 20px;
         }
 
-        /* Универсальные элементы */
-        .brawl-button {
-            background: linear-gradient(to bottom, #fde84e, #fbb829);
-            color: #4c1a82;
-            border: 3px solid #fff;
-            border-radius: 15px;
-            padding: 15px 25px;
-            font-size: 1.2em;
-            font-family: inherit;
-            text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
-            box-shadow: 0 5px 0 #b36b00;
-            cursor: pointer;
-            transition: all 0.1s ease-out;
-            text-transform: uppercase;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .brawl-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 7px 0 #b36b00; }
-        .brawl-button:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 3px 0 #b36b00; }
-        .brawl-button:disabled { background: #999; box-shadow: 0 5px 0 #555; color: #ddd; cursor: not-allowed; }
-        
-        .brawl-panel {
-            background-color: var(--brawl-blue);
-            border: 4px solid var(--brawl-yellow);
-            border-radius: 20px;
-            box-shadow: 0 10px 0 rgba(0,0,0,0.2), inset 0 0 10px rgba(255,255,255,0.3);
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
             padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        /* Экран входа */
-        #login-screen {
+        h1 {
+            color: #f7931a;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .balance {
+            font-size: 2em;
+            color: #333;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .stats {
             display: flex;
-            flex-direction: column;
-            gap: 15px; /* Уменьшили отступ */
-            width: 90%;
-            max-width: 400px;
+            justify-content: space-around;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: #f7931a;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin: 5px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .clicker-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .click-btn {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #f7931a, #ff8c00);
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(247, 147, 26, 0.4);
+            transition: all 0.1s;
+        }
+
+        .click-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(247, 147, 26, 0.6);
+        }
+
+        .click-btn:active {
+            transform: scale(0.95);
+        }
+
+        .upgrades-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .upgrades-section h2 {
+            color: #333;
+            margin-bottom: 20px;
             text-align: center;
         }
-        #login-screen h1 { font-size: 2.5em; margin: 0; text-shadow: 3px 3px 0 var(--brawl-purple); }
-        .input-field {
-            padding: 15px; border-radius: 15px; border: 3px solid #fff;
-            background: rgba(0,0,0,0.2); color: #fff; font-size: 1.1em; /* Уменьшили шрифт */
-            text-align: center; font-family: inherit; text-transform: uppercase;
-        }
-        #login-controls { display: flex; gap: 15px; margin-top: 10px; }
-        #login-controls button { flex: 1; padding: 15px 10px; }
-        #login-error { color: var(--brawl-pink); text-shadow: 1px 1px 0 #000; font-size: 0.9em; height: 20px; font-weight: bold; }
 
-        /* Игровой контейнер */
-        #game-container { display: none; width: 100%; height: 100vh; flex-direction: column; justify-content: space-between; }
-        .top-bar { padding: 10px 20px; text-align: center; }
-        #balance { font-size: 1.8em; text-shadow: 2px 2px 0 #000; }
-        .sub-stats { font-size: 0.8em; color: #eee; }
-        #logout-button { position: absolute; top: 15px; left: 15px; background: var(--brawl-pink); color: #fff; border: 2px solid #fff; border-radius: 10px; padding: 8px 10px; box-shadow: 0 3px 0 #a11b51; font-size: 0.8em; }
-        .clicker-zone { display: flex; justify-content: center; align-items: center; flex-grow: 1; position: relative; }
-        .coin { width: 180px; height: 180px; background: linear-gradient(45deg, #ffde00, #ffb829); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; border: 8px solid #fff; box-shadow: 0 10px 0 #b36b00; transition: all 0.1s ease-out; }
-        .coin:active { transform: translateY(5px); box-shadow: 0 5px 0 #b36b00; }
-        .coin-symbol { font-size: 90px; color: #b36b00; text-shadow: 2px 2px 0px rgba(255,255,255,0.7); }
-        .floating-number { position: absolute; font-size: 2em; color: var(--brawl-yellow); text-shadow: 2px 2px 0 var(--brawl-purple); pointer-events: none; animation: float-up 1.5s ease-out forwards; }
-        #bottom-nav { display: flex; justify-content: space-around; padding: 15px; background: rgba(0,0,0,0.2); }
-        #bottom-nav .brawl-button { font-size: 1em; padding: 12px 20px; }
-        
-        /* Модальное окно (без изменений) */
-        #modal-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 100; }
-        #modal-content-wrapper { width: 90%; max-width: 500px; animation: modal-pop-in 0.3s ease-out; }
-        #modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        #modal-title { margin: 0; font-size: 2em; color: var(--brawl-yellow); text-shadow: 3px 3px 0 var(--brawl-purple); }
-        #modal-close-button { font-size: 2em; background: var(--brawl-pink); color: #fff; border: 3px solid #fff; border-radius: 50%; width: 50px; height: 50px; text-shadow: 2px 2px 0 #a11b51; box-shadow: 0 4px 0 #a11b51; }
-        #modal-body { max-height: 50vh; overflow-y: auto; padding-right: 10px; }
-        .upgrade-item { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px; margin-bottom: 10px; border: 2px solid rgba(255,255,255,0.3); }
-        .upgrade-item button { padding: 10px; font-size: 0.9em; width: 150px; flex-shrink: 0; }
-        .upgrade-title { font-weight: bold; } .upgrade-stats { font-size: 0.8em; color: #ddd; }
-        button.can-afford { animation: pulse-glow 1.5s infinite; }
+        .upgrade-item {
+            background: #f5f5f5;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border-left: 5px solid #f7931a;
+        }
+
+        .upgrade-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .upgrade-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .upgrade-count {
+            background: #f7931a;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
+        .upgrade-info {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+
+        .upgrade-btn {
+            width: 100%;
+            padding: 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .upgrade-btn:hover {
+            background: #45a049;
+        }
+
+        .upgrade-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .rebirth-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .rebirth-section h2 {
+            color: #764ba2;
+            margin-bottom: 20px;
+        }
+
+        .rebirth-info {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+
+        .rebirth-btn {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .rebirth-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(118, 75, 162, 0.4);
+        }
+
+        .rebirth-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .click-effect {
+            position: fixed;
+            color: #f7931a;
+            font-weight: bold;
+            pointer-events: none;
+            animation: floatUp 1s ease-out forwards;
+            font-size: 1.5em;
+        }
+
+        @keyframes floatUp {
+            to {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .balance {
+                font-size: 1.5em;
+            }
+            
+            .stats {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
-
-    <div id="login-screen" class="brawl-panel">
-        <h1>КЛИКЕР</h1>
-        <input type="text" id="username-input" class="input-field" placeholder="ВАШЕ ИМЯ">
-        <input type="password" id="password-input" class="input-field" placeholder="ПАРОЛЬ">
-        <input type="password" id="confirm-password-input" class="input-field" placeholder="ПОДТВЕРДИТЕ ПАРОЛЬ">
-        <div id="login-controls">
-            <button id="register-button" class="brawl-button">Создать</button>
-            <button id="login-button" class="brawl-button">Войти</button>
+    <div class="container">
+        <div class="header">
+            <h1>Bitcoin Clicker</h1>
+            <div class="balance">
+                <span id="balance">0.000000001</span> BTC
+            </div>
+            <div class="stats">
+                <div class="stat-item">
+                    За клик: <span id="perClick">0.000000001</span> BTC
+                </div>
+                <div class="stat-item">
+                    В секунду: <span id="perSecond">0</span> BTC
+                </div>
+                <div class="stat-item">
+                    Перерождений: <span id="rebirths">0</span>
+                </div>
+                <div class="stat-item">
+                    Множитель: x<span id="multiplier">1</span>
+                </div>
+            </div>
         </div>
-        <div id="login-error"></div>
+
+        <div class="main-content">
+            <div class="clicker-section">
+                <h2>Добывайте Bitcoin</h2>
+                <button class="click-btn" id="clickBtn">МАЙНИТЬ</button>
+                <p style="margin-top: 20px; color: #666;">
+                    Всего кликов: <span id="totalClicks">0</span>
+                </p>
+            </div>
+
+            <div class="upgrades-section">
+                <h2>Улучшения</h2>
+                <div id="upgradesContainer"></div>
+            </div>
+        </div>
+
+        <div class="rebirth-section">
+            <h2>Перерождение</h2>
+            <div class="rebirth-info">
+                <p>Перерождение сбросит весь прогресс, но даст постоянный множитель!</p>
+                <p style="margin-top: 10px; font-size: 1.2em; color: #764ba2;">
+                    Требуется: <span id="rebirthCost">1</span> BTC
+                </p>
+                <p style="margin-top: 5px;">
+                    Новый множитель: x<span id="newMultiplier">2</span>
+                </p>
+            </div>
+            <button class="rebirth-btn" id="rebirthBtn">Переродиться</button>
+        </div>
     </div>
 
-    <div id="game-container">
-        <!-- ... остальная часть игрового интерфейса без изменений ... -->
-    </div>
-
-    <div id="modal-container">
-        <!-- ... модальное окно без изменений ... -->
-    </div>
-
-    <script src="script.js" defer></script>
+    <script src="script.js"></script>
 </body>
 </html>
