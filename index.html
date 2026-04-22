@@ -1,235 +1,154 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // --- Элементы DOM ---
-    const loginScreen = document.getElementById('login-screen');
-    const usernameInput = document.getElementById('username-input');
-    const passwordInput = document.getElementById('password-input');
-    const confirmPasswordInput = document.getElementById('confirm-password-input');
-    const registerButton = document.getElementById('register-button');
-    const loginButton = document.getElementById('login-button');
-    const loginError = document.getElementById('login-error');
-    
-    const gameContainer = document.getElementById('game-container');
-    const logoutButton = document.getElementById('logout-button');
-    const balanceEl = document.getElementById('balance');
-    const clickPowerEl = document.getElementById('click-power');
-    const autoPerSecondEl = document.getElementById('auto-per-second');
-    const bitcoinButton = document.getElementById('bitcoin-button');
-    const clickerZone = document.querySelector('.clicker-zone');
-    
-    const modalContainer = document.getElementById('modal-container');
-    const modalTitle = document.getElementById('modal-title');
-    const modalBody = document.getElementById('modal-body');
-    const modalCloseButton = document.getElementById('modal-close-button');
-    
-    // --- Глобальные переменные ---
-    let currentUser = null, allUsersData = {}, gameState = {}, gameLoopInterval = null;
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Биткоин Кликер: Brawl Edition</title>
+    <style>
+        /* Анимации */
+        @keyframes float-up { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-80px); opacity: 0; } }
+        @keyframes modal-pop-in { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 15px #ffde00, 0 0 5px #fff; } 50% { box-shadow: 0 0 30px #ffde00, 0 0 10px #fff; } }
 
-    // --- Функция хэширования ---
-    async function sha256(message) {
-        const msgBuffer = new TextEncoder().encode(message);
-        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-
-    // --- Данные игры ---
-    const upgrades = [
-        { id: 'click_1', name: 'Старая мышь', type: 'click', power: 0.00000001, baseCost: 0.000001, mult: 1.2 },
-        { id: 'auto_1',  name: 'Скрипт',   type: 'auto',  power: 0.00000005,  baseCost: 0.00002,  mult: 1.25 },
-        { id: 'click_2', name: 'Игровая мышь', type: 'click', power: 0.00000010,   baseCost: 0.0001,   mult: 1.22 },
-        { id: 'auto_2',  name: 'Raspberry Pi',    type: 'auto',  power: 0.000001,    baseCost: 0.0005,    mult: 1.30 },
-        { id: 'click_3', name: 'Макросы', type: 'click', power: 0.000005, baseCost: 0.001, mult: 1.28},
-        { id: 'auto_3',  name: 'Старая видеокарта', type: 'auto', power: 0.00002,   baseCost: 0.01,     mult: 1.35 }
-    ];
-    const REBIRTH_BASE_COST = 0.1;
-
-    // --- Вспомогательные функции ---
-    const format = (num) => num.toFixed(8);
-    const getRebirthMultiplier = () => 1 + (gameState.rebirths || 0);
-    const getUpgradeLevel = (id) => gameState.upgradeLevels[id] || 0;
-    const getUpgradeCost = (upg) => upg.baseCost * Math.pow(upg.mult, getUpgradeLevel(upg.id));
-    const getRebirthCost = () => REBIRTH_BASE_COST * Math.pow(5, gameState.rebirths || 0);
-
-    // --- Управление данными и аккаунтами ---
-    function loadAllData() { allUsersData = JSON.parse(localStorage.getItem('brawlClickerUsers') || '{}'); }
-    function saveGame() {
-        if (currentUser) {
-            allUsersData[currentUser].gameState = gameState;
-            localStorage.setItem('brawlClickerUsers', JSON.stringify(allUsersData));
+        /* Основные стили */
+        :root { --brawl-blue: #0e457f; --brawl-purple: #4c1a82; --brawl-yellow: #fde84e; --brawl-pink: #fe5591; }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Arial Black', Gadget, sans-serif;
+            background: linear-gradient(135deg, var(--brawl-blue), var(--brawl-purple));
+            color: #fff;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            user-select: none;
+            overflow: hidden;
+            text-transform: uppercase;
         }
-    }
-    
-    function showError(message) { loginError.textContent = message; setTimeout(() => loginError.textContent = '', 3000); }
 
-    async function register() {
-        const username = usernameInput.value.trim().toUpperCase();
-        const password = passwordInput.value;
-        const confirmPassword = confirmPasswordInput.value;
-
-        if (!username || !password) return showError('Имя и пароль не могут быть пустыми');
-        if (password.length < 4) return showError('Пароль > 3 символов');
-        if (password !== confirmPassword) return showError('Пароли не совпадают');
-        if (allUsersData[username]) return showError('Это имя уже занято');
+        /* Универсальные элементы */
+        .brawl-button {
+            background: linear-gradient(to bottom, #fde84e, #fbb829);
+            color: #4c1a82;
+            border: 3px solid #fff;
+            border-radius: 15px;
+            padding: 15px 25px;
+            font-size: 1.2em;
+            font-family: inherit;
+            text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+            box-shadow: 0 5px 0 #b36b00;
+            cursor: pointer;
+            transition: all 0.1s ease-out;
+            text-transform: uppercase;
+        }
+        .brawl-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 7px 0 #b36b00; }
+        .brawl-button:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 3px 0 #b36b00; }
+        .brawl-button:disabled { background: #999; box-shadow: 0 5px 0 #555; color: #ddd; cursor: not-allowed; }
         
-        const hashedPassword = await sha256(password);
+        .brawl-panel {
+            background-color: var(--brawl-blue);
+            border: 4px solid var(--brawl-yellow);
+            border-radius: 20px;
+            box-shadow: 0 10px 0 rgba(0,0,0,0.2), inset 0 0 10px rgba(255,255,255,0.3);
+            padding: 30px;
+        }
+
+        /* Экран входа */
+        #login-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        #login-screen h1 { font-size: 2.5em; margin: 0; text-shadow: 3px 3px 0 var(--brawl-purple); }
+        .input-field {
+            padding: 15px; border-radius: 15px; border: 3px solid #fff;
+            background: rgba(0,0,0,0.2); color: #fff; font-size: 1.1em;
+            text-align: center; font-family: inherit; text-transform: uppercase;
+        }
+        #login-controls { display: flex; gap: 15px; margin-top: 10px; }
+        #login-controls button { flex: 1; padding: 15px 10px; }
+        #login-error { color: var(--brawl-pink); text-shadow: 1px 1px 0 #000; font-size: 0.9em; height: 20px; font-weight: bold; }
+
+        /* Игровой контейнер */
+        #game-container { display: none; width: 100%; height: 100vh; flex-direction: column; justify-content: space-between; }
+        .top-bar { padding: 10px 20px; text-align: center; }
+        #balance { font-size: 1.8em; text-shadow: 2px 2px 0 #000; }
+        .sub-stats { font-size: 0.8em; color: #eee; }
+        #logout-button { position: absolute; top: 15px; left: 15px; background: var(--brawl-pink); color: #fff; border: 2px solid #fff; border-radius: 10px; padding: 8px 10px; box-shadow: 0 3px 0 #a11b51; font-size: 0.8em; }
+        .clicker-zone { display: flex; justify-content: center; align-items: center; flex-grow: 1; position: relative; }
+        .coin { width: 180px; height: 180px; background: linear-gradient(45deg, #ffde00, #ffb829); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; border: 8px solid #fff; box-shadow: 0 10px 0 #b36b00; transition: all 0.1s ease-out; }
+        .coin:active { transform: translateY(5px); box-shadow: 0 5px 0 #b36b00; }
+        .coin-symbol { font-size: 90px; color: #b36b00; text-shadow: 2px 2px 0px rgba(255,255,255,0.7); }
+        .floating-number { position: absolute; font-size: 2em; color: var(--brawl-yellow); text-shadow: 2px 2px 0 var(--brawl-purple); pointer-events: none; animation: float-up 1.5s ease-out forwards; }
+        #bottom-nav { display: flex; justify-content: space-around; padding: 15px; background: rgba(0,0,0,0.2); }
+        #bottom-nav .brawl-button { font-size: 1em; padding: 12px 20px; }
         
-        allUsersData[username] = {
-            password: hashedPassword,
-            gameState: { balance: 0.0, clickPowerBase: 0.00000001, autoClickRateBase: 0.0, rebirths: 0, upgradeLevels: {} }
-        };
+        #modal-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 100; }
+        #modal-content-wrapper { width: 90%; max-width: 500px; animation: modal-pop-in 0.3s ease-out; }
+        #modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        #modal-title { margin: 0; font-size: 2em; color: var(--brawl-yellow); text-shadow: 3px 3px 0 var(--brawl-purple); }
+        #modal-close-button { font-size: 2em; background: var(--brawl-pink); color: #fff; border: 3px solid #fff; border-radius: 50%; width: 50px; height: 50px; text-shadow: 2px 2px 0 #a11b51; box-shadow: 0 4px 0 #a11b51; }
+        #modal-body { max-height: 50vh; overflow-y: auto; padding-right: 10px; }
+        .upgrade-item { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px; margin-bottom: 10px; border: 2px solid rgba(255,255,255,0.3); }
+        .upgrade-item button { padding: 10px; font-size: 0.9em; width: 150px; flex-shrink: 0; }
+        .upgrade-title { font-weight: bold; } .upgrade-stats { font-size: 0.8em; color: #ddd; }
+        button.can-afford { animation: pulse-glow 1.5s infinite; }
+        #leaderboard-list li { background: rgba(0,0,0,0.2); padding: 10px 15px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; }
+        #leaderboard-list li span:first-child { color: var(--brawl-yellow); }
 
-        currentUser = username;
-        gameState = allUsersData[username].gameState;
-        saveGame();
-        startGame();
-    }
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: var(--brawl-blue); } ::-webkit-scrollbar-thumb { background: var(--brawl-yellow); border-radius: 4px; }
+    </style>
+</head>
+<body>
 
-    async function login() {
-        const username = usernameInput.value.trim().toUpperCase();
-        const password = passwordInput.value;
+    <div id="login-screen" class="brawl-panel">
+        <h1>КЛИКЕР</h1>
+        <input type="text" id="username-input" class="input-field" placeholder="ВАШЕ ИМЯ">
+        <input type="password" id="password-input" class="input-field" placeholder="ПАРОЛЬ">
+        <input type="password" id="confirm-password-input" class="input-field" placeholder="ПОДТВЕРДИТЕ ПАРОЛЬ">
+        <div id="login-controls">
+            <button id="register-button" class="brawl-button">Создать</button>
+            <button id="login-button" class="brawl-button">Войти</button>
+        </div>
+        <div id="login-error"></div>
+    </div>
 
-        if (!username || !password) return showError('Введите имя и пароль');
-        if (!allUsersData[username]) return showError('Неверное имя или пароль');
-
-        const hashedPassword = await sha256(password);
-        if (allUsersData[username].password !== hashedPassword) return showError('Неверное имя или пароль');
+    <div id="game-container">
+        <div class="top-bar">
+            <button id="logout-button">Выйти</button>
+            <div id="balance">0.00000000 BTC</div>
+            <div class="sub-stats">
+                Клик: <span id="click-power">0</span> | В сек: <span id="auto-per-second">0</span>
+            </div>
+        </div>
         
-        currentUser = username;
-        gameState = allUsersData[username].gameState;
-        startGame();
-    }
-    
-    function startGame() {
-        loginScreen.style.display = 'none';
-        gameContainer.style.display = 'flex';
-        gameLoopInterval = setInterval(gameLoop, 100);
-        updateDisplay();
-    }
+        <div class="clicker-zone">
+            <div id="bitcoin-button" class="coin">
+                <span class="coin-symbol">₿</span>
+            </div>
+        </div>
 
-    function logout() {
-        saveGame();
-        clearInterval(gameLoopInterval);
-        currentUser = null;
-        gameContainer.style.display = 'none';
-        loginScreen.style.display = 'flex';
-        usernameInput.value = '';
-        passwordInput.value = '';
-        confirmPasswordInput.value = '';
-    }
+        <div id="bottom-nav">
+            <button class="brawl-button" data-modal="Улучшения">Улучшения</button>
+            <button class="brawl-button" data-modal="Перерождение">Перерождение</button>
+            <button class="brawl-button" data-modal="Лидеры">Лидеры</button>
+        </div>
+    </div>
 
-    // --- Управление модальными окнами ---
-    function openModal(type) {
-        modalTitle.textContent = type;
-        let contentHTML = '';
+    <div id="modal-container">
+        <div id="modal-content-wrapper" class="brawl-panel">
+            <div id="modal-header">
+                <h2 id="modal-title">Заголовок</h2>
+                <button id="modal-close-button" class="brawl-button">X</button>
+            </div>
+            <div id="modal-body"></div>
+        </div>
+    </div>
 
-        if (type === 'Улучшения') {
-            contentHTML = upgrades.map(u => {
-                const cost = getUpgradeCost(u);
-                const canAfford = gameState.balance >= cost;
-                return `
-                <div class="upgrade-item">
-                    <div>
-                        <p class="upgrade-title">${u.name} (УР. ${getUpgradeLevel(u.id)})</p>
-                        <p class="upgrade-stats">+${format(u.power)} ${u.type === 'click' ? 'КЛИК' : 'СЕК'}</p>
-                    </div>
-                    <button class="brawl-button ${canAfford ? 'can-afford' : ''}" onclick="buyUpgrade('${u.id}')" ${!canAfford ? 'disabled' : ''}>${format(cost)}</button>
-                </div>`;
-            }).join('');
-        } else if (type === 'Перерождение') {
-            const cost = getRebirthCost();
-            const canAfford = gameState.balance >= cost;
-            contentHTML = `
-                <p>Сбросьте прогресс, чтобы получить постоянный бонус +100% к доходу.</p>
-                <p>Текущий бонус: x${getRebirthMultiplier()}</p>
-                <hr style="border-color: rgba(255,255,255,0.2);">
-                <p>Стоимость: <strong>${format(cost)} BTC</strong></p>
-                <button class="brawl-button ${canAfford ? 'can-afford' : ''}" onclick="performRebirth()" ${!canAfford ? 'disabled' : ''}>Переродиться</button>
-            `;
-        } else if (type === 'Лидеры') {
-            const sorted = Object.entries(allUsersData).map(([name, data]) => ({ name, ...data.gameState }))
-                .sort((a, b) => (b.rebirths || 0) * 1e9 + (b.balance || 0) - ((a.rebirths || 0) * 1e9 + (a.balance || 0)))
-                .slice(0, 10);
-            contentHTML = `<ol id="leaderboard-list">${sorted.map(u => `<li><span>${u.name}</span> <span>${u.rebirths || 0} ПЕР.</span></li>`).join('') || '<li>Пусто</li>'}</ol>`;
-        }
-
-        modalBody.innerHTML = contentHTML;
-        modalContainer.style.display = 'flex';
-    }
-
-    function closeModal() { modalContainer.style.display = 'none'; }
-    
-    // --- Игровая логика ---
-    function updateDisplay() {
-        if (!currentUser) return;
-        const multiplier = getRebirthMultiplier();
-        balanceEl.textContent = `${format(gameState.balance)} BTC`;
-        clickPowerEl.textContent = format(gameState.clickPowerBase * multiplier);
-        autoPerSecondEl.textContent = format(gameState.autoClickRateBase * multiplier);
-    }
-    
-    function gameLoop() {
-        if (gameState.autoClickRateBase > 0) {
-            gameState.balance += gameState.autoClickRateBase * getRebirthMultiplier() / 10;
-            updateDisplay();
-        }
-    }
-    
-    function showFloatingNumber(amount, event) {
-        const el = document.createElement('span');
-        el.textContent = `+${format(amount)}`;
-        el.className = 'floating-number';
-        const rect = clickerZone.getBoundingClientRect();
-        el.style.left = `${event.clientX - rect.left}px`;
-        el.style.top = `${event.clientY - rect.top - 40}px`;
-        clickerZone.appendChild(el);
-        setTimeout(() => el.remove(), 1500);
-    }
-
-    window.buyUpgrade = (id) => {
-        const u = upgrades.find(up => up.id === id);
-        const cost = getUpgradeCost(u);
-        if (gameState.balance >= cost) {
-            gameState.balance -= cost;
-            gameState.upgradeLevels[id] = getUpgradeLevel(id) + 1;
-            if (u.type === 'click') gameState.clickPowerBase += u.power; else gameState.autoClickRateBase += u.power;
-            openModal('Улучшения');
-            updateDisplay();
-        }
-    }
-
-    window.performRebirth = () => {
-        const cost = getRebirthCost();
-        if (gameState.balance >= cost) {
-            gameState.balance = 0;
-            gameState.clickPowerBase = 0.00000001;
-            gameState.autoClickRateBase = 0.0;
-            gameState.upgradeLevels = {};
-            gameState.rebirths += 1;
-            alert(`Перерождение завершено! Ваш множитель теперь x${getRebirthMultiplier()}!`);
-            openModal('Перерождение');
-            updateDisplay();
-        }
-    }
-    
-    // --- Привязка событий ---
-    registerButton.addEventListener('click', register);
-    loginButton.addEventListener('click', login);
-    logoutButton.addEventListener('click', logout);
-    modalCloseButton.addEventListener('click', closeModal);
-    modalContainer.addEventListener('click', (e) => { if (e.target === modalContainer) closeModal(); });
-    
-    document.querySelectorAll('#bottom-nav .brawl-button').forEach(btn => {
-        btn.addEventListener('click', () => openModal(btn.dataset.modal));
-    });
-
-    bitcoinButton.addEventListener('click', (e) => {
-        const gain = gameState.clickPowerBase * getRebirthMultiplier();
-        gameState.balance += gain;
-        showFloatingNumber(gain, e);
-        updateDisplay();
-    });
-
-    window.addEventListener('beforeunload', saveGame);
-    setInterval(saveGame, 5000);
-    loadAllData();
-});
+    <script src="script.js" defer></script>
+</body>
+</html>
