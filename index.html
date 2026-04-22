@@ -4,7 +4,175 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Биткоин Кликер</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Общие стили */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            user-select: none; /* Запрещаем выделение текста */
+        }
+
+        .game-container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 95%;
+            max-width: 1200px;
+            background-color: #2b2b2b;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+            overflow: hidden;
+        }
+
+        /* Колонки */
+        .main-column {
+            flex: 2;
+            padding: 20px 40px;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid #444;
+            min-width: 300px;
+        }
+
+        .side-column {
+            flex: 1;
+            padding: 20px;
+            background-color: #222;
+            display: flex;
+            flex-direction: column;
+            min-width: 280px;
+        }
+
+        /* Заголовок и баланс */
+        header {
+            text-align: center;
+            border-bottom: 2px solid #444;
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            color: #ff9900;
+            margin-top: 0;
+            font-size: 2.2em;
+        }
+
+        .balance-display h2 {
+            font-size: 2.5em;
+            margin: 10px 0;
+            color: #fff;
+            word-break: break-all;
+        }
+
+        .stats-display {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+            color: #aaa;
+        }
+
+        /* "Моделька" Биткоина */
+        .click-area {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 0;
+        }
+
+        .coin {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #ffc400, #ff9900);
+            border-radius: 50%;
+            border: 8px solid #b36b00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.3);
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .coin:hover {
+            transform: scale(1.05);
+        }
+
+        .coin:active {
+            transform: scale(0.98);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4), inset 0 0 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .coin-symbol {
+            font-size: 100px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+        }
+
+
+        /* Улучшения */
+        .upgrades-section, .rebirth-section {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #ff9900;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+
+        .upgrades-list {
+            max-height: calc(100vh - 450px);
+            min-height: 200px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .upgrade-item {
+            background-color: #333;
+            border: 1px solid #444;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .upgrade-item p { margin: 0 0 10px 0; }
+        .upgrade-title { font-weight: bold; color: #ff9900; }
+        .upgrade-stats { font-size: 0.9em; color: #ccc; }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            background-color: #ff9900;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
+            margin-top: auto;
+        }
+
+        button:hover:not(:disabled) { background-color: #ffb700; }
+        button:disabled { background-color: #555; color: #888; cursor: not-allowed; }
+
+        /* Перерождение */
+        .rebirth-section p { color: #ccc; font-size: 0.9em; }
+
+        /* Скроллбар */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #2b2b2b; }
+        ::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff9900; }
+    </style>
 </head>
 <body>
 
@@ -19,8 +187,8 @@
                     <span>BTC</span>
                 </div>
                 <div class="stats-display">
-                    <p>За клик: <span id="click-power">0.00000001</span> BTC</p>
-                    <p>В секунду: <span id="auto-per-second">0.00000000</span> BTC</p>
+                    <p>За клик: <span id="click-power">0.00000001</span></p>
+                    <p>В секунду: <span id="auto-per-second">0.00000000</span></p>
                 </div>
             </header>
             
@@ -43,7 +211,7 @@
             <div class="rebirth-section">
                 <h2>Перерождение</h2>
                 <p>
-                    Перерождение сбросит ваш прогресс (баланс и улучшения), но навсегда увеличит ваш общий доход.
+                    Сбрасывает прогресс (баланс и улучшения), но навсегда увеличивает ваш общий доход.
                     Каждое перерождение дает +100% к базовому доходу.
                 </p>
                 <p>Текущий бонус: <span id="rebirth-multiplier">x1</span></p>
